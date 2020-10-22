@@ -223,7 +223,7 @@ void print_employee_list()
             printf("\n\nDetails for Employee %d\n", i);
             printf("Name: ");
             puts(temp->name);
-            printf("Employee ID: %d", temp->ID);
+            printf("Employee ID: %d\n", temp->ID);
             printf("Age: %d\n", temp->age);
             printf("Phone Number: 0%d\n", temp->phone_number);
             printf("Salary: %.2lf\n", temp->salary);
@@ -250,7 +250,7 @@ void delete_Employee_Record()
             printf("-----------------------------------------\n");
             printf("Name: ");
             puts(myNode->name);
-            printf("Employee ID: %d", myNode->ID);
+            printf("Employee ID: %d\n", myNode->ID);
             printf("Age: %d\n", myNode->age);
             printf("Phone Number: 0%d\n", myNode->phone_number);
             printf("Salary: %.2lf\n", myNode->salary);
@@ -303,7 +303,7 @@ void search_Employee_By_Name()
             printf("%s Name employee present in this database.\n", value);
             printf("Name: ");
             puts(searchNode->name);
-            printf("Employee ID: %d", searchNode->ID);
+            printf("Employee ID: %d\n", searchNode->ID);
             printf("Age: %d\n", searchNode->age);
             printf("Phone Number: 0%d\n", searchNode->phone_number);
             printf("Salary: %.2lf\n", searchNode->salary);
@@ -337,7 +337,7 @@ void search_Employee_By_ID()
             printf("%d ID employee present in this database.\n", value);
             printf("Name: ");
             puts(searchNode->name);
-            printf("Employee ID: %d", searchNode->ID);
+            printf("Employee ID: %d\n", searchNode->ID);
             printf("Age: %d\n", searchNode->age);
             printf("Phone Number: 0%d\n", searchNode->phone_number);
             printf("Salary: %.2lf\n", searchNode->salary);
@@ -371,7 +371,7 @@ void search_Employee_By_Age()
             printf("%d Age employee present in this database.\n", value);
             printf("Name: ");
             puts(searchNode->name);
-            printf("Employee ID: %d", searchNode->ID);
+            printf("Employee ID: %d\n", searchNode->ID);
             printf("Age: %d\n", searchNode->age);
             printf("Phone Number: 0%d\n", searchNode->phone_number);
             printf("Salary: %.2lf\n", searchNode->salary);
@@ -405,7 +405,7 @@ void search_Employee_By_phone()
             printf("%d Phone Number employee present in this database.\n", value);
             printf("Name: ");
             puts(searchNode->name);
-            printf("Employee ID: %d", searchNode->ID);
+            printf("Employee ID: %d\n", searchNode->ID);
             printf("Age: %d\n", searchNode->age);
             printf("Phone Number: 0%d\n", searchNode->phone_number);
             printf("Salary: %.2lf\n", searchNode->salary);
@@ -439,7 +439,7 @@ void search_Employee_By_Salary()
             printf("%ld Salary employee present in this database.\n", value);
             printf("Name: ");
             puts(searchNode->name);
-            printf("Employee ID: %d", searchNode->ID);
+            printf("Employee ID: %d\n", searchNode->ID);
             printf("Age: %d\n", searchNode->age);
             printf("Phone Number: 0%d\n", searchNode->phone_number);
             printf("Salary: %.2lf\n", searchNode->salary);
@@ -474,7 +474,7 @@ void search_Employee_By_Place()
             printf("%s area employee present in this database.\n", value);
             printf("Name: ");
             puts(searchNode->name);
-            printf("Employee ID: %d", searchNode->ID);
+            printf("Employee ID: %d\n", searchNode->ID);
             printf("Age: %d\n", searchNode->age);
             printf("Phone Number: 0%d\n", searchNode->phone_number);
             printf("Salary: %.2lf\n", searchNode->salary);
@@ -511,7 +511,7 @@ bool modify_Employee_Name()
             printf("-----------------------------------\n");
             printf("Name: ");
             puts(current->name);
-            printf("Employee ID: %d", current->ID);
+            printf("Employee ID: %d\n", current->ID);
             printf("Age: %d\n", current->age);
             printf("Phone Number: 0%d\n", current->phone_number);
             printf("Salary: %.2lf\n", current->salary);
@@ -547,6 +547,29 @@ bool modify_Employee_ID()
     printf("\nEnter ID for modifie: ");
     scanf("%d", &old);
     struct employee *current = head;
+    if (current->next == NULL)
+    {
+        if (current->ID == old)
+        {
+            printf("\n%d this ID found employee.", old);
+            printf("-----------------------------------\n");
+            printf("Name: ");
+            puts(current->name);
+            printf("Employee ID: %d\n", current->ID);
+            printf("Age: %d\n", current->age);
+            printf("Phone Number: 0%d\n", current->phone_number);
+            printf("Salary: %.2lf\n", current->salary);
+            printf("\nDo You want to Modifie this Records?(1 = Yes, 2 = No)\n");
+            printf("--------------------------------------------------------\n");
+            scanf("%d ", &key);
+            if (key == 1)
+            {
+                mod = current;
+                // printf("\n%s found at position %d, and replaced\n", old, pos);
+                return true;
+            }
+        }
+    }
     while (current->next != NULL)
     {
         if (current->ID == old)
@@ -555,7 +578,7 @@ bool modify_Employee_ID()
             printf("-----------------------------------\n");
             printf("Name: ");
             puts(current->name);
-            printf("Employee ID: %d", current->ID);
+            printf("Employee ID: %d\n", current->ID);
             printf("Age: %d\n", current->age);
             printf("Phone Number: 0%d\n", current->phone_number);
             printf("Salary: %.2lf\n", current->salary);
@@ -597,6 +620,11 @@ void change_Records(struct employee *current)
         printf("6. Exit\n");
         printf("\nChange>> ");
         scanf("%d", &option);
+        if (option == 6)
+        {
+            break;
+        }
+
         switch (option)
         {
         case 1:
@@ -624,8 +652,6 @@ void change_Records(struct employee *current)
             printf("Enter new Salary: ");
             scanf("%lf", &salary);
             current->salary = salary;
-            break;
-        case 6:
             break;
         default:
             printf("\nYou have to choose right option\n");
