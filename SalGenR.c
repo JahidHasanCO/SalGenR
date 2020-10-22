@@ -53,8 +53,27 @@ void create_linked_list()
         scanf("%d", &pnumber);
         printf("Enter Salary: ");
         scanf("%lf", &salary);
+
+        struct employee *temp_node;
+        temp_node = (struct employee *)malloc(sizeof(struct employee));
+        strcpy(temp_node->name, name);
+        temp_node->age = age;
+        temp_node->phone_number = pnumber;
+        temp_node->salary = salary;
+        temp_node->next = NULL;
+
+        //For the 1st element
+        if (head == NULL)
+        {
+            head = temp_node;
+            tail = temp_node;
+        }
+        else
+        {
+            tail->next = temp_node;
+            tail = temp_node;
+        }
         i++;
-        insert_at_last(name, age, pnumber, salary);
     }
 }
 
@@ -116,6 +135,14 @@ void print_employee_list()
 
 void printLogo()
 {
+
+    printf("███████╗ █████╗ ██╗      ██████╗ ███████╗███╗   ██╗██████╗ \n");
+    printf("██╔════╝██╔══██╗██║     ██╔════╝ ██╔════╝████╗  ██║██╔══██╗\n");
+    printf("███████╗███████║██║     ██║  ███╗█████╗  ██╔██╗ ██║██████╔╝\n");
+    printf("╚════██║██╔══██║██║     ██║   ██║██╔══╝  ██║╚██╗██║██╔══██╗\n");
+    printf("███████║██║  ██║███████╗╚██████╔╝███████╗██║ ╚████║██║  ██║\n");
+    printf("╚══════╝╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝\n");
+    printf("-------------------------SaLGenR---------------------------\n");
 }
 
 int main()
@@ -137,32 +164,34 @@ int main()
         {
             while (1)
             {
-                printf("Select Your Option From Menu.\n");
-                printf("Menu\n1.Add New\n2.List\n3.Exit\n4.Modify\n5.Search\n6.Delete\n");
-                printf("SalGenR>> ");
+                printf("\nSelect Your Option From Menu.\n");
+                printf("------------------------------\n");
+                printf("1.Add New\n2.List\n3.Exit\n4.Modify\n5.Search\n6.Delete\n");
+                printf("\nSalGenR>> ");
                 scanf("%d", &option);
                 switch (option)
                 {
                 case 1:
-                    // printf("Choose Option.\n1.Add Employee Continuesly.\n2.Add Employee at First.\n3.Add Employee in position\n4.Add Employee at Last.\n");
-                    // scanf("%d", option1);
-                    // switch (option1)
-                    // {
-                    // case 1:
-                    //     create_linked_list();
-                    //     break;
-                    // case 2:
-                    //     break;
-                    // case 3:
+                    printf("\nChoose Option.\n--------------\n1.Add Employee Continuesly.\n2.Add Employee at First.\n3.Add Employee in position\n4.Add Employee at Last.\n");
+                    printf("\nAdd New>> ");
+                    scanf("%d", &option1);
+                    switch (option1)
+                    {
+                    case 1:
+                        create_linked_list();
+                        break;
+                    case 2:
+                        break;
+                    case 3:
 
-                    //     break;
-                    // case 4:
-                    //     break;
-                    // default:
-                    //     printf("You Need to select valid option\n");
-                    //     break;
-                    // }
-                    create_linked_list();
+                        break;
+                    case 4:
+                        break;
+                    default:
+                        printf("You Need to select valid option\n");
+                        break;
+                    }
+                    // create_linked_list();
                     break;
                 case 2:
                     print_employee_list();
