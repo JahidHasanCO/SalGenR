@@ -46,17 +46,17 @@ void create_linked_list()
     char name[20];
     int age, pnumber, id;
     double salary;
-    printf("Enter Amount of Employee: ");
+    printf("\nEnter Amount of Employee: ");
     scanf("%d", &n); //scanning size of employee add.
 
     while (n--)
     {
-        printf("Enter Details for Employee %d\n", i);
+        printf("\nEnter Details for Employee %d\n", i);
         printf("Enter Name: ");
         getchar();
         gets(name);
         printf("Enter ID: ");
-        scanf("%d", id);
+        scanf("%d", &id);
         printf("Enter Age: ");
         scanf("%d", &age);
         printf("Enter Phone number: ");
@@ -100,7 +100,7 @@ void insert_at_last()
     getchar();
     gets(name);
     printf("Enter ID: ");
-    scanf("%d", id);
+    scanf("%d", &id);
     printf("Enter Age: ");
     scanf("%d", &age);
     printf("Enter Phone number: ");
@@ -141,7 +141,7 @@ void insert_at_first()
     getchar();
     gets(name);
     printf("Enter ID: ");
-    scanf("%d", id);
+    scanf("%d", &id);
     printf("Enter Age: ");
     scanf("%d", &age);
     printf("Enter Phone number: ");
@@ -173,7 +173,7 @@ void insert_after_postiton()
     getchar();
     gets(name);
     printf("Enter ID: ");
-    scanf("%d", id);
+    scanf("%d", &id);
     printf("Enter Age: ");
     scanf("%d", &age);
     printf("Enter Phone number: ");
@@ -289,8 +289,9 @@ void search_Employee_By_Name()
     char value[20];
     struct employee *searchNode = head;
     int flag = 0;
-    printf("Enter name for search.\n");
-    printf("Search>> ");
+    printf("\nEnter name for search.\n");
+    printf("----------------------\n");
+    printf("\nSearch>> ");
     getchar();
     gets(value);
     while (searchNode != NULL)
@@ -314,7 +315,7 @@ void search_Employee_By_Name()
     }
 
     if (flag == 0)
-        printf("Employee not found\n");
+        printf("\nEmployee not found for this (%s) name\n", value);
 }
 
 //Search Employees Details by ID
@@ -323,8 +324,9 @@ void search_Employee_By_ID()
     int value;
     struct employee *searchNode = head;
     int flag = 0;
-    printf("Enter ID for search.\n");
-    printf("Search>> ");
+    printf("\nEnter ID for search.\n");
+    printf("----------------------\n");
+    printf("\nSearch>> ");
     scanf("%d", &value);
     while (searchNode != NULL)
     {
@@ -347,7 +349,7 @@ void search_Employee_By_ID()
     }
 
     if (flag == 0)
-        printf("Employee not found\n");
+        printf("\nEmployee not found for this (%d) ID\n", value);
 }
 
 //Search Employees Details by Age
@@ -356,8 +358,9 @@ void search_Employee_By_Age()
     int value;
     struct employee *searchNode = head;
     int flag = 0;
-    printf("Enter age for search.\n");
-    printf("Search>> ");
+    printf("\nEnter age for search.\n");
+    printf("-----------------------\n");
+    printf("\nSearch>> ");
     scanf("%d", &value);
     while (searchNode != NULL)
     {
@@ -380,7 +383,7 @@ void search_Employee_By_Age()
     }
 
     if (flag == 0)
-        printf("Employee not found\n");
+        printf("\nEmployee not found for this (%d) Age\n", value);
 }
 
 //Search Employees Details by Phone Number
@@ -389,8 +392,9 @@ void search_Employee_By_phone()
     int value;
     struct employee *searchNode = head;
     int flag = 0;
-    printf("Enter phone number for search.\n");
-    printf("Search>> ");
+    printf("\nEnter phone number for search.\n");
+    printf("------------------------------\n");
+    printf("\nSearch>> ");
     scanf("%d", &value);
     while (searchNode != NULL)
     {
@@ -413,7 +417,7 @@ void search_Employee_By_phone()
     }
 
     if (flag == 0)
-        printf("Employee not found\n");
+        printf("\nEmployee not found for this (0%d) Phone number\n", value);
 }
 
 //Search Employees Details by Salary
@@ -422,8 +426,9 @@ void search_Employee_By_Salary()
     double value;
     struct employee *searchNode = head;
     int flag = 0;
-    printf("Enter salary for search.\n");
-    printf("Search>> ");
+    printf("\nEnter salary for search.\n");
+    printf("------------------------\n");
+    printf("\nSearch>> ");
     scanf("%d", &value);
     while (searchNode != NULL)
     {
@@ -446,7 +451,7 @@ void search_Employee_By_Salary()
     }
 
     if (flag == 0)
-        printf("Employee not found\n");
+        printf("\nEmployee not found for this (%ld) salary\n", value);
 }
 
 //Search Employees Details by Place
@@ -455,8 +460,9 @@ void search_Employee_By_Place()
     char value[20];
     struct employee *searchNode = head;
     int flag = 0;
-    printf("Enter area for search.\n");
-    printf("Search>> ");
+    printf("\nEnter area for search.\n");
+    printf("----------------------\n");
+    printf("\nSearch>> ");
     getchar();
     gets(value);
     while (searchNode != NULL)
@@ -480,7 +486,7 @@ void search_Employee_By_Place()
     }
 
     if (flag == 0)
-        printf("Employee not found\n");
+        printf("\nEmployee not found for this (%s) Place\n", value);
 }
 
 void printLogo()
@@ -572,7 +578,7 @@ int main()
                     printf("4.Search by Phone Number\n");
                     printf("5.Search by Salary\n");
                     printf("6.Search by Place\n");
-                    printf("Search>> ");
+                    printf("\nSearch>> ");
                     scanf("%d", &option2);
                     switch (option2) //search option
                     {
