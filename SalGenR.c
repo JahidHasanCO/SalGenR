@@ -429,7 +429,7 @@ void search_Employee_By_Salary()
     printf("\nEnter salary for search.\n");
     printf("------------------------\n");
     printf("\nSearch>> ");
-    scanf("%d", &value);
+    scanf("%ld", &value);
     while (searchNode != NULL)
     {
         if (searchNode->salary == value)
@@ -551,7 +551,7 @@ bool modify_Employee_ID()
     {
         if (current->ID == old)
         {
-            printf("\n%d this ID found employee.", old);
+            printf("\n%d this ID found employee.\n", old);
             printf("-----------------------------------\n");
             printf("Name: ");
             puts(current->name);
