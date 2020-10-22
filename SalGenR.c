@@ -288,7 +288,7 @@ void search_Employee_By_Name()
 {
     char value[20];
     struct employee *searchNode = head;
-    int flag = 0;
+    int flag = 0; //this variable check for search result validity
     printf("\nEnter name for search.\n");
     printf("----------------------\n");
     printf("\nSearch>> ");
@@ -323,7 +323,7 @@ void search_Employee_By_ID()
 {
     int value;
     struct employee *searchNode = head;
-    int flag = 0;
+    int flag = 0; //this variable check for search result validity
     printf("\nEnter ID for search.\n");
     printf("----------------------\n");
     printf("\nSearch>> ");
@@ -357,7 +357,7 @@ void search_Employee_By_Age()
 {
     int value;
     struct employee *searchNode = head;
-    int flag = 0;
+    int flag = 0; //this variable check for search result validity
     printf("\nEnter age for search.\n");
     printf("-----------------------\n");
     printf("\nSearch>> ");
@@ -391,7 +391,7 @@ void search_Employee_By_phone()
 {
     int value;
     struct employee *searchNode = head;
-    int flag = 0;
+    int flag = 0; //this variable check for search result validity
     printf("\nEnter phone number for search.\n");
     printf("------------------------------\n");
     printf("\nSearch>> ");
@@ -425,7 +425,7 @@ void search_Employee_By_Salary()
 {
     double value;
     struct employee *searchNode = head;
-    int flag = 0;
+    int flag = 0; //this variable check for search result validity
     printf("\nEnter salary for search.\n");
     printf("------------------------\n");
     printf("\nSearch>> ");
@@ -459,7 +459,7 @@ void search_Employee_By_Place()
 {
     char value[20];
     struct employee *searchNode = head;
-    int flag = 0;
+    int flag = 0; //this variable check for search result validity
     printf("\nEnter area for search.\n");
     printf("----------------------\n");
     printf("\nSearch>> ");
@@ -634,6 +634,8 @@ void change_Records(struct employee *current)
     }
     mod = NULL;
 }
+
+// logo function
 void printLogo()
 {
     printf("-------------------------SaLGenR---------------------------\n");
