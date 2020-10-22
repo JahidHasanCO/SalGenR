@@ -77,8 +77,21 @@ void create_linked_list()
     }
 }
 
-void insert_at_last(char name[20], int age, int pnumber, double salary)
+void insert_at_last()
 {
+    char name[20];
+    int age, pnumber;
+    double salary;
+    printf("Enter Details for Employee.\n");
+    printf("Enter Name: ");
+    getchar();
+    gets(name);
+    printf("Enter Age: ");
+    scanf("%d", &age);
+    printf("Enter Phone number: ");
+    scanf("%d", &pnumber);
+    printf("Enter Salary: ");
+    scanf("%lf", &salary);
     struct employee *temp_node;
     temp_node = (struct employee *)malloc(sizeof(struct employee));
     strcpy(temp_node->name, name);
@@ -100,13 +113,27 @@ void insert_at_last(char name[20], int age, int pnumber, double salary)
     }
 }
 
-void insert_at_first(double salary)
+void insert_at_first()
 {
+    char name[20];
+    int age, pnumber;
+    double salary;
+    printf("Enter Details for Employee.\n");
+    printf("Enter Name: ");
+    getchar();
+    gets(name);
+    printf("Enter Age: ");
+    scanf("%d", &age);
+    printf("Enter Phone number: ");
+    scanf("%d", &pnumber);
+    printf("Enter Salary: ");
+    scanf("%lf", &salary);
     struct employee *temp_node = (struct employee *)malloc(sizeof(struct employee));
-
+    strcpy(temp_node->name, name);
+    temp_node->age = age;
+    temp_node->phone_number = pnumber;
     temp_node->salary = salary;
     temp_node->next = head;
-
     head = temp_node;
 }
 void print_employee_list()
@@ -126,22 +153,37 @@ void print_employee_list()
             puts(temp->name);
             printf("Age: %d\n", temp->age);
             printf("Phone Number: 0%d\n", temp->phone_number);
-            printf("Salary: %lf\n", temp->salary);
+            printf("Salary: %.2lf\n", temp->salary);
             temp = temp->next;
             i++;
         }
     }
 }
 
+void search_Employee_By_Age()
+{
+    int value;
+    struct employee *searchNode = head;
+    int flag = 0;
+    scanf("%d", &value);
+    while (searchNode != NULL)
+    {
+        if (searchNode->age == value)
+        {
+            printf("%d is present in this list. Memory address is %d\n", value, searchNode);
+            flag = 1;
+            break;
+        }
+        else
+            searchNode = searchNode->next;
+    }
+
+    if (flag == 0)
+        printf("Employee not found\n");
+}
+
 void printLogo()
 {
-
-    printf("███████╗ █████╗ ██╗      ██████╗ ███████╗███╗   ██╗██████╗ \n");
-    printf("██╔════╝██╔══██╗██║     ██╔════╝ ██╔════╝████╗  ██║██╔══██╗\n");
-    printf("███████╗███████║██║     ██║  ███╗█████╗  ██╔██╗ ██║██████╔╝\n");
-    printf("╚════██║██╔══██║██║     ██║   ██║██╔══╝  ██║╚██╗██║██╔══██╗\n");
-    printf("███████║██║  ██║███████╗╚██████╔╝███████╗██║ ╚████║██║  ██║\n");
-    printf("╚══════╝╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝\n");
     printf("-------------------------SaLGenR---------------------------\n");
 }
 
@@ -152,7 +194,7 @@ int main()
     int option, option1;
     char name[15], pass[15], name1[20];
     double salary;
-    // printLogo();
+    printLogo();
     while (1)
     {
         printf("You need to login first.\n");
@@ -181,17 +223,18 @@ int main()
                         create_linked_list();
                         break;
                     case 2:
+                        insert_at_first();
                         break;
                     case 3:
 
                         break;
                     case 4:
+                        insert_at_last();
                         break;
                     default:
                         printf("You Need to select valid option\n");
                         break;
                     }
-                    // create_linked_list();
                     break;
                 case 2:
                     print_employee_list();
@@ -202,6 +245,7 @@ int main()
                 case 4:
                     break;
                 case 5:
+                    search_Employee_By_Age();
                     break;
                 case 6:
                     break;
