@@ -21,7 +21,7 @@ struct employee
     int phone_number;
     double salary;
     struct employee *next;
-} * head, *tail;
+} * head, *tail, *mod;
 
 // login section
 bool loginCheck(char name[15], char pass[15])
@@ -490,14 +490,14 @@ void search_Employee_By_Place()
 }
 
 //modifie section
-void modify_Employee_Name()
+bool modify_Employee_Name()
 {
     char old[20];
     int pos = 0, key;
     if (head == NULL)
     {
         printf("\nDatabase not Found!\n");
-        return;
+        return false;
     }
     printf("\nEnter name for modifie: ");
     getchar();
@@ -520,59 +520,9 @@ void modify_Employee_Name()
             scanf("%d ", &key);
             if (key == 1)
             {
-                char name[20];
-                int age, pnumber, id, option;
-                double salary;
-                while (1)
-                {
-                    printf("\nChoose option for modifie\n");
-                    printf("--------------------------\n");
-                    printf("1. Name change.\n");
-                    printf("2. ID change\n");
-                    printf("3. Age change\n");
-                    printf("4. Phone Number change\n");
-                    printf("5. Salary change\n");
-                    printf("6. Exit\n");
-                    printf("\nChange>> ");
-                    scanf("%d", &option);
-                    switch (option)
-                    {
-                    case 1:
-                        printf("Enter new Name: ");
-                        getchar();
-                        gets(name);
-                        strcpy(current->name, name);
-                        break;
-                    case 2:
-                        printf("Enter new ID: ");
-                        scanf("%d", &id);
-                        current->ID = id;
-                        break;
-                    case 3:
-                        printf("Enter new Age: ");
-                        scanf("%d", &age);
-                        current->age = age;
-                        break;
-                    case 4:
-                        printf("Enter new Phone number: ");
-                        scanf("%d", &pnumber);
-                        current->phone_number = pnumber;
-                        break;
-                    case 5:
-                        printf("Enter new Salary: ");
-                        scanf("%lf", &salary);
-                        current->salary = salary;
-                        break;
-                    case 6:
-                        break;
-                        break;
-                    default:
-                        printf("\nYou have to choose right option\n");
-                        break;
-                    }
-                }
-                printf("\n%s found at position %d, and replaced\n", old, pos);
-                return;
+                mod = current;
+                // printf("\n%s found at position %d, and replaced\n", old, pos);
+                return true;
             }
         }
         else
@@ -582,9 +532,64 @@ void modify_Employee_Name()
         pos++;
     }
 
-    printf("%d does not exist in the list\n", old);
+    printf("%s does not exist in the list\n", old);
 }
 
+void change_Records(struct employee *current)
+{
+
+    char name[20];
+    int age, pnumber, id, option;
+    double salary;
+    while (1)
+    {
+        printf("\nChoose option for modifie\n");
+        printf("--------------------------\n");
+        printf("1. Name change.\n");
+        printf("2. ID change\n");
+        printf("3. Age change\n");
+        printf("4. Phone Number change\n");
+        printf("5. Salary change\n");
+        printf("6. Exit\n");
+        printf("\nChange>> ");
+        scanf("%d", &option);
+        switch (option)
+        {
+        case 1:
+            printf("Enter new Name: ");
+            getchar();
+            gets(name);
+            strcpy(current->name, name);
+            break;
+        case 2:
+            printf("Enter new ID: ");
+            scanf("%d", &id);
+            current->ID = id;
+            break;
+        case 3:
+            printf("Enter new Age: ");
+            scanf("%d", &age);
+            current->age = age;
+            break;
+        case 4:
+            printf("Enter new Phone number: ");
+            scanf("%d", &pnumber);
+            current->phone_number = pnumber;
+            break;
+        case 5:
+            printf("Enter new Salary: ");
+            scanf("%lf", &salary);
+            current->salary = salary;
+            break;
+        case 6:
+            break;
+        default:
+            printf("\nYou have to choose right option\n");
+            break;
+        }
+    }
+    mod = NULL;
+}
 void printLogo()
 {
     printf("-------------------------SaLGenR---------------------------\n");
@@ -593,8 +598,9 @@ void printLogo()
 //main Function
 int main()
 {
-    head = NULL;                  //declareing head to Null
-    tail = NULL;                  //Declaring tail to Null
+    head = NULL; //declareing head to Null
+    tail = NULL; //Declaring tail to Null
+    mod = NULL;
     int option, option1, option2; //option for Main manu. Option1 for Add New section. Option2 for Search Section.
     char name[15], pass[15], name1[20];
     double salary;
@@ -661,6 +667,11 @@ int main()
                     exit(0);
                     break;
                 case 4:
+                    //Modifie function
+                    if (modify_Employee_Name() == true)
+                    {
+                        change_Records(mod);
+                    }
                     break;
                 case 5:
 
