@@ -38,7 +38,7 @@ bool loginCheck(char name[15], char pass[15])
     }
 }
 
-//Creating
+//Creating or adding linklist continiously
 void create_linked_list()
 {
     int n, i = 1;
@@ -46,7 +46,7 @@ void create_linked_list()
     int age, pnumber;
     double salary;
     printf("Enter Amount of Employee: ");
-    scanf("%d", &n);
+    scanf("%d", &n); //scanning size of employee add.
 
     while (n--)
     {
@@ -84,11 +84,13 @@ void create_linked_list()
     }
 }
 
+//insert Node in linklist at last
 void insert_at_last()
 {
     char name[20];
     int age, pnumber;
     double salary;
+    //scanning all details of employee
     printf("Enter Details for Employee.\n");
     printf("Enter Name: ");
     getchar();
@@ -99,9 +101,10 @@ void insert_at_last()
     scanf("%d", &pnumber);
     printf("Enter Salary: ");
     scanf("%lf", &salary);
+    //store value in linklist
     struct employee *temp_node;
     temp_node = (struct employee *)malloc(sizeof(struct employee));
-    strcpy(temp_node->name, name);
+    strcpy(temp_node->name, name); //sring copy function
     temp_node->age = age;
     temp_node->phone_number = pnumber;
     temp_node->salary = salary;
@@ -120,6 +123,7 @@ void insert_at_last()
     }
 }
 
+//insert nodes at first
 void insert_at_first()
 {
     char name[20];
@@ -143,6 +147,54 @@ void insert_at_first()
     temp_node->next = head;
     head = temp_node;
 }
+
+void insert_after_postiton()
+{
+    int key;
+    struct employee *myNode = head;
+    int flag = 0;
+    printf("Enter position for insert Employee: ");
+    scanf("%d", &key);
+    char name[20];
+    int age, pnumber;
+    double salary;
+    printf("Enter Details for Employee.\n");
+    printf("Enter Name: ");
+    getchar();
+    gets(name);
+    printf("Enter Age: ");
+    scanf("%d", &age);
+    printf("Enter Phone number: ");
+    scanf("%d", &pnumber);
+    printf("Enter Salary: ");
+    scanf("%lf", &salary);
+    while (myNode != NULL)
+    {
+        if (myNode->age == key)
+        {
+            struct employee *newNode = (struct employee *)malloc(sizeof(struct employee));
+            strcpy(newNode->name, name);
+            newNode->age = age;
+            newNode->phone_number = pnumber;
+            newNode->salary = salary;
+            newNode->next = myNode->next;
+            myNode->next = newNode;
+
+            printf("New Employee %s is inserted after %d\n", name, key);
+
+            flag = 1;
+
+            break;
+        }
+        else
+            myNode = myNode->next;
+    }
+
+    if (flag == 0)
+        printf("Key not found!\n");
+}
+
+//print all employees details
 void print_employee_list()
 {
     struct employee *temp = head;
@@ -167,6 +219,7 @@ void print_employee_list()
     }
 }
 
+//Delete Employees Record
 void delete_Employee_Record()
 {
     int value, key;
@@ -188,7 +241,7 @@ void delete_Employee_Record()
             printf("Salary: %.2lf\n", myNode->salary);
             printf("\n\nFor Delete this record (type 1): ");
             scanf("%d", &key);
-            if (key)
+            if (key == 1)
             {
 
                 if (previous == NULL)
@@ -215,6 +268,7 @@ void delete_Employee_Record()
         printf("Key not found!\n");
 }
 
+//Search Employees Details by Name
 void search_Employee_By_Name()
 {
     char value[20];
@@ -245,6 +299,7 @@ void search_Employee_By_Name()
         printf("Employee not found\n");
 }
 
+//Search Employees Details by Age
 void search_Employee_By_Age()
 {
     int value;
@@ -274,6 +329,7 @@ void search_Employee_By_Age()
         printf("Employee not found\n");
 }
 
+//Search Employees Details by Phone Number
 void search_Employee_By_phone()
 {
     int value;
@@ -303,6 +359,7 @@ void search_Employee_By_phone()
         printf("Employee not found\n");
 }
 
+//Search Employees Details by Salary
 void search_Employee_By_Salary()
 {
     double value;
@@ -332,6 +389,7 @@ void search_Employee_By_Salary()
         printf("Employee not found\n");
 }
 
+//Search Employees Details by Place
 void search_Employee_By_Place()
 {
     char value[20];
@@ -399,7 +457,12 @@ int main()
                 {
                 case 1:
                     //this is adding section. Here we can adding Employees Details various option
-                    printf("\nChoose Option.\n--------------\n1.Add Employee Continuesly.\n2.Add Employee at First.\n3.Add Employee in position\n4.Add Employee at Last.\n");
+                    printf("\nChoose Option.\n");
+                    printf("--------------\n");
+                    printf("1.Add Employee Continuesly.\n");
+                    printf("2.Add Employee at First.\n");
+                    printf("3.Add Employee in position\n");
+                    printf("4.Add Employee at Last.\n");
                     printf("\nAdd New>> ");
                     scanf("%d", &option1); //options for add new section
                     switch (option1)
@@ -413,7 +476,7 @@ int main()
                         insert_at_first();
                         break;
                     case 3:
-
+                        insert_after_postiton();
                         break;
                     case 4:
                         //this case for store Employees details from Last Node
@@ -435,7 +498,9 @@ int main()
                 case 4:
                     break;
                 case 5:
+
                     //case 5 ----Search section start
+
                     printf("\nChoose your Searching Option.\n");
                     printf("-------------------------------\n");
                     printf("1.Search by Name\n");
@@ -444,31 +509,39 @@ int main()
                     printf("4.Search by Salary\n");
                     printf("5.Search by Place\n");
                     printf("Search>> ");
-                    scanf("%d", option2);
-                    switch (option2)
+                    scanf("%d", &option2);
+                    switch (option2) //search option
                     {
                     case 1:
+                        //Search Employee details using by Name
                         search_Employee_By_Name();
                         break;
                     case 2:
+                        //Search Employee details using by Age
                         search_Employee_By_Age();
                         break;
                     case 3:
+                        //Search Employee details using by Phone Number
                         search_Employee_By_phone();
                         break;
                     case 4:
+                        //Search Employee details using by Salary
                         search_Employee_By_Salary();
                         break;
                     case 5:
+                        //Search Employee details using by Area
                         search_Employee_By_Place();
                         break;
                     default:
+                        //if user input not vaild
                         printf("You have to choose right option\n");
                         break;
                     }
+
                     //case 5 ----search section End
                     break;
                 case 6:
+                    //Delete Employees record
                     delete_Employee_Record();
                     break;
                 default:
