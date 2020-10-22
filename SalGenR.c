@@ -489,6 +489,102 @@ void search_Employee_By_Place()
         printf("\nEmployee not found for this (%s) Place\n", value);
 }
 
+//modifie section
+void modify_Employee_Name()
+{
+    char old[20];
+    int pos = 0, key;
+    if (head == NULL)
+    {
+        printf("\nDatabase not Found!\n");
+        return;
+    }
+    printf("\nEnter name for modifie: ");
+    getchar();
+    gets(old);
+    struct employee *current = head;
+    while (current->next != NULL)
+    {
+        if (strcmp(current->name, old) == 0)
+        {
+            printf("\n%s this name found employee.", old);
+            printf("-----------------------------------\n");
+            printf("Name: ");
+            puts(current->name);
+            printf("Employee ID: %d", current->ID);
+            printf("Age: %d\n", current->age);
+            printf("Phone Number: 0%d\n", current->phone_number);
+            printf("Salary: %.2lf\n", current->salary);
+            printf("\nDo You want to Modifie this Records?(1 = Yes, 2 = No)\n");
+            printf("--------------------------------------------------------\n");
+            scanf("%d ", &key);
+            if (key == 1)
+            {
+                char name[20];
+                int age, pnumber, id, option;
+                double salary;
+                while (1)
+                {
+                    printf("\nChoose option for modifie\n");
+                    printf("--------------------------\n");
+                    printf("1. Name change.\n");
+                    printf("2. ID change\n");
+                    printf("3. Age change\n");
+                    printf("4. Phone Number change\n");
+                    printf("5. Salary change\n");
+                    printf("6. Exit\n");
+                    printf("\nChange>> ");
+                    scanf("%d", &option);
+                    switch (option)
+                    {
+                    case 1:
+                        printf("Enter new Name: ");
+                        getchar();
+                        gets(name);
+                        strcpy(current->name, name);
+                        break;
+                    case 2:
+                        printf("Enter new ID: ");
+                        scanf("%d", &id);
+                        current->ID = id;
+                        break;
+                    case 3:
+                        printf("Enter new Age: ");
+                        scanf("%d", &age);
+                        current->age = age;
+                        break;
+                    case 4:
+                        printf("Enter new Phone number: ");
+                        scanf("%d", &pnumber);
+                        current->phone_number = pnumber;
+                        break;
+                    case 5:
+                        printf("Enter new Salary: ");
+                        scanf("%lf", &salary);
+                        current->salary = salary;
+                        break;
+                    case 6:
+                        break;
+                        break;
+                    default:
+                        printf("\nYou have to choose right option\n");
+                        break;
+                    }
+                }
+                printf("\n%s found at position %d, and replaced\n", old, pos);
+                return;
+            }
+        }
+        else
+        {
+            current = current->next;
+        }
+        pos++;
+    }
+
+    printf("%d does not exist in the list\n", old);
+}
+
 void printLogo()
 {
     printf("-------------------------SaLGenR---------------------------\n");
