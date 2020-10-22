@@ -664,7 +664,16 @@ void change_Records(struct employee *current)
 // logo function
 void printLogo()
 {
-    printf("-------------------------SaLGenR---------------------------\n");
+    printf("        _____       _  _____            _____        \n");
+    printf("       / ____|     | |/ ____|          |  __ \\       \n");
+    printf("      | (___   __ _| | |  __  ___ _ __ | |__) |      \n");
+    printf("       \\___ \\ / _` | | | |_ |/ _ \\ '_ \\|  _  /       \n");
+    printf("       ____) | (_| | | |__| |  __/ | | | | \\ \\       \n");
+    printf("      |_____/ \\__,_|_|\\_____|\\___|_| |_|_|  \\_\\      \n");
+    printf("-----------------------SaLGenR--------------------------\n");
+    printf("         a powerfull employee management tool           \n");
+    printf("                  @jibbleeinuxcode                      \n");
+    printf("\n\n");
 }
 
 //main Function
