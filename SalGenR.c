@@ -213,7 +213,7 @@ void print_employee_list()
     struct employee *temp = head;
     if (head == NULL)
     {
-        printf("Employee list is Empty\n");
+        printf("\nEmployee list is Empty\n");
     }
     else
     {
@@ -280,7 +280,7 @@ void delete_Employee_Record()
     }
 
     if (flag == 0)
-        printf("Key not found!\n");
+        printf("\nThis ID not found!\n");
 }
 
 //Search Employees Details by Name
@@ -535,6 +535,50 @@ bool modify_Employee_Name()
     printf("%s does not exist in the list\n", old);
 }
 
+bool modify_Employee_ID()
+{
+    int old;
+    int pos = 0, key;
+    if (head == NULL)
+    {
+        printf("\nDatabase not Found!\n");
+        return false;
+    }
+    printf("\nEnter ID for modifie: ");
+    scanf("%d", &old);
+    struct employee *current = head;
+    while (current->next != NULL)
+    {
+        if (current->ID == old)
+        {
+            printf("\n%d this ID found employee.", old);
+            printf("-----------------------------------\n");
+            printf("Name: ");
+            puts(current->name);
+            printf("Employee ID: %d", current->ID);
+            printf("Age: %d\n", current->age);
+            printf("Phone Number: 0%d\n", current->phone_number);
+            printf("Salary: %.2lf\n", current->salary);
+            printf("\nDo You want to Modifie this Records?(1 = Yes, 2 = No)\n");
+            printf("--------------------------------------------------------\n");
+            scanf("%d ", &key);
+            if (key == 1)
+            {
+                mod = current;
+                // printf("\n%s found at position %d, and replaced\n", old, pos);
+                return true;
+            }
+        }
+        else
+        {
+            current = current->next;
+        }
+        pos++;
+    }
+
+    printf("%s does not exist in the list\n", old);
+}
+
 void change_Records(struct employee *current)
 {
 
@@ -668,7 +712,7 @@ int main()
                     break;
                 case 4:
                     //Modifie function
-                    if (modify_Employee_Name() == true)
+                    if (modify_Employee_ID() == true)
                     {
                         change_Records(mod);
                     }
