@@ -1,7 +1,7 @@
-//this project name is SalGenR
-//This project for Employees details store in companies Database..
-// Using this Project we can handle our Employees Details
-// We can add new employee , we can search Employee, We can Modify Employees Records
+/*this project name is SalGenR
+This project for Employees details store in companies Database..
+Using this Project we can handle our Employees Details
+We can add new employee , we can search Employee, We can Modify Employees Records*/
 
 #include <stdio.h>
 #include <string.h>
@@ -38,6 +38,7 @@ bool loginCheck(char name[15], char pass[15])
     }
 }
 
+//Creating
 void create_linked_list()
 {
     int n, i = 1;
@@ -164,6 +165,54 @@ void print_employee_list()
             i++;
         }
     }
+}
+
+void delete_Employee_Record()
+{
+    int value, key;
+    struct employee *myNode = head, *previous = NULL;
+    int flag = 0;
+    printf("Enter Age: ");
+    scanf("%d", &value);
+    while (myNode != NULL)
+    {
+
+        if (myNode->age == value)
+        {
+            printf("\nDo you Really delete this Employee Record\n");
+            printf("-----------------------------------------\n");
+            printf("Name: ");
+            puts(myNode->name);
+            printf("Age: %d\n", myNode->age);
+            printf("Phone Number: 0%d\n", myNode->phone_number);
+            printf("Salary: %.2lf\n", myNode->salary);
+            printf("\n\nFor Delete this record (type 1): ");
+            scanf("%d", &key);
+            if (key)
+            {
+
+                if (previous == NULL)
+                    head = myNode->next;
+                else
+                    previous->next = myNode->next;
+
+                printf("%d is deleted from list\n", value);
+
+                flag = 1;
+                free(myNode); //need to free up the memory to prevent memory leak
+                break;
+            }
+            else
+            {
+                break;
+            }
+        }
+        previous = myNode;
+        myNode = myNode->next;
+    }
+
+    if (flag == 0)
+        printf("Key not found!\n");
 }
 
 void search_Employee_By_Name()
@@ -318,56 +367,66 @@ void printLogo()
     printf("-------------------------SaLGenR---------------------------\n");
 }
 
+//main Function
 int main()
 {
-    head = NULL;
-    tail = NULL;
-    int option, option1, option2;
+    head = NULL;                  //declareing head to Null
+    tail = NULL;                  //Declaring tail to Null
+    int option, option1, option2; //option for Main manu. Option1 for Add New section. Option2 for Search Section.
     char name[15], pass[15], name1[20];
     double salary;
-    printLogo();
+    printLogo(); //call printlogo function.
     while (1)
     {
+        //this is main loop.
         printf("You need to login first.\n");
         printf("Username: ");
-        gets(name);
+        gets(name); //input username for login
         printf("Password: ");
-        gets(pass);
-        if (loginCheck(name, pass))
+        gets(pass);                 //input password for login
+        if (loginCheck(name, pass)) /*calling login check function for check input username and password validity*/
         {
+            /*This is dashboard section after successfull login*/
             while (1)
             {
                 printf("\nSelect Your Option From Menu.\n");
                 printf("------------------------------\n");
+                //Options for main Menu.
                 printf("1.Add New\n2.List\n3.Exit\n4.Modify\n5.Search\n6.Delete\n");
                 printf("\nSalGenR>> ");
-                scanf("%d", &option);
+                scanf("%d", &option); //seacning key for main menu
                 switch (option)
                 {
                 case 1:
+                    //this is adding section. Here we can adding Employees Details various option
                     printf("\nChoose Option.\n--------------\n1.Add Employee Continuesly.\n2.Add Employee at First.\n3.Add Employee in position\n4.Add Employee at Last.\n");
                     printf("\nAdd New>> ");
-                    scanf("%d", &option1);
+                    scanf("%d", &option1); //options for add new section
                     switch (option1)
                     {
                     case 1:
+                        //this case for store Employees details continiously
                         create_linked_list();
                         break;
                     case 2:
+                        //this case for store Employees details from first Node
                         insert_at_first();
                         break;
                     case 3:
 
                         break;
                     case 4:
+                        //this case for store Employees details from Last Node
                         insert_at_last();
                         break;
                     default:
+                        //if user input a unvalid option which is not match on above.
                         printf("You Need to select valid option\n");
                         break;
                     }
                     break;
                 case 2:
+                    //this section for printing Employees records
                     print_employee_list();
                     break;
                 case 3:
@@ -410,6 +469,7 @@ int main()
                     //case 5 ----search section End
                     break;
                 case 6:
+                    delete_Employee_Record();
                     break;
                 default:
                     printf("You Need to choose option into 1-6\n");
