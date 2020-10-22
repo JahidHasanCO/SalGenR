@@ -16,6 +16,7 @@ struct employee
 {
     //properties of a Employee
     char name[20];
+    int ID;
     int age;
     int phone_number;
     double salary;
@@ -43,7 +44,7 @@ void create_linked_list()
 {
     int n, i = 1;
     char name[20];
-    int age, pnumber;
+    int age, pnumber, id;
     double salary;
     printf("Enter Amount of Employee: ");
     scanf("%d", &n); //scanning size of employee add.
@@ -54,6 +55,8 @@ void create_linked_list()
         printf("Enter Name: ");
         getchar();
         gets(name);
+        printf("Enter ID: ");
+        scanf("%d", id);
         printf("Enter Age: ");
         scanf("%d", &age);
         printf("Enter Phone number: ");
@@ -65,6 +68,7 @@ void create_linked_list()
         temp_node = (struct employee *)malloc(sizeof(struct employee));
         strcpy(temp_node->name, name);
         temp_node->age = age;
+        temp_node->ID = id;
         temp_node->phone_number = pnumber;
         temp_node->salary = salary;
         temp_node->next = NULL;
@@ -88,13 +92,15 @@ void create_linked_list()
 void insert_at_last()
 {
     char name[20];
-    int age, pnumber;
+    int age, pnumber, id;
     double salary;
     //scanning all details of employee
     printf("Enter Details for Employee.\n");
     printf("Enter Name: ");
     getchar();
     gets(name);
+    printf("Enter ID: ");
+    scanf("%d", id);
     printf("Enter Age: ");
     scanf("%d", &age);
     printf("Enter Phone number: ");
@@ -105,6 +111,7 @@ void insert_at_last()
     struct employee *temp_node;
     temp_node = (struct employee *)malloc(sizeof(struct employee));
     strcpy(temp_node->name, name); //sring copy function
+    temp_node->ID = id;
     temp_node->age = age;
     temp_node->phone_number = pnumber;
     temp_node->salary = salary;
@@ -127,12 +134,14 @@ void insert_at_last()
 void insert_at_first()
 {
     char name[20];
-    int age, pnumber;
+    int age, pnumber, id;
     double salary;
     printf("Enter Details for Employee.\n");
     printf("Enter Name: ");
     getchar();
     gets(name);
+    printf("Enter ID: ");
+    scanf("%d", id);
     printf("Enter Age: ");
     scanf("%d", &age);
     printf("Enter Phone number: ");
@@ -141,6 +150,7 @@ void insert_at_first()
     scanf("%lf", &salary);
     struct employee *temp_node = (struct employee *)malloc(sizeof(struct employee));
     strcpy(temp_node->name, name);
+    temp_node->ID = id;
     temp_node->age = age;
     temp_node->phone_number = pnumber;
     temp_node->salary = salary;
@@ -156,12 +166,14 @@ void insert_after_postiton()
     printf("Enter position for insert Employee: ");
     scanf("%d", &key);
     char name[20];
-    int age, pnumber;
+    int age, pnumber, id;
     double salary;
     printf("Enter Details for Employee.\n");
     printf("Enter Name: ");
     getchar();
     gets(name);
+    printf("Enter ID: ");
+    scanf("%d", id);
     printf("Enter Age: ");
     scanf("%d", &age);
     printf("Enter Phone number: ");
@@ -170,10 +182,11 @@ void insert_after_postiton()
     scanf("%lf", &salary);
     while (myNode != NULL)
     {
-        if (myNode->age == key)
+        if (myNode->ID == key)
         {
             struct employee *newNode = (struct employee *)malloc(sizeof(struct employee));
             strcpy(newNode->name, name);
+            newNode->ID = id;
             newNode->age = age;
             newNode->phone_number = pnumber;
             newNode->salary = salary;
@@ -210,6 +223,7 @@ void print_employee_list()
             printf("\n\nDetails for Employee %d\n", i);
             printf("Name: ");
             puts(temp->name);
+            printf("Employee ID: %d", temp->ID);
             printf("Age: %d\n", temp->age);
             printf("Phone Number: 0%d\n", temp->phone_number);
             printf("Salary: %.2lf\n", temp->salary);
@@ -225,17 +239,18 @@ void delete_Employee_Record()
     int value, key;
     struct employee *myNode = head, *previous = NULL;
     int flag = 0;
-    printf("Enter Age: ");
+    printf("Enter ID: ");
     scanf("%d", &value);
     while (myNode != NULL)
     {
 
-        if (myNode->age == value)
+        if (myNode->ID == value)
         {
             printf("\nDo you Really delete this Employee Record\n");
             printf("-----------------------------------------\n");
             printf("Name: ");
             puts(myNode->name);
+            printf("Employee ID: %d", myNode->ID);
             printf("Age: %d\n", myNode->age);
             printf("Phone Number: 0%d\n", myNode->phone_number);
             printf("Salary: %.2lf\n", myNode->salary);
@@ -274,6 +289,8 @@ void search_Employee_By_Name()
     char value[20];
     struct employee *searchNode = head;
     int flag = 0;
+    printf("Enter name for search.\n");
+    printf("Search>> ");
     getchar();
     gets(value);
     while (searchNode != NULL)
@@ -285,6 +302,40 @@ void search_Employee_By_Name()
             printf("%s Name employee present in this database.\n", value);
             printf("Name: ");
             puts(searchNode->name);
+            printf("Employee ID: %d", searchNode->ID);
+            printf("Age: %d\n", searchNode->age);
+            printf("Phone Number: 0%d\n", searchNode->phone_number);
+            printf("Salary: %.2lf\n", searchNode->salary);
+            flag = 1;
+            searchNode = searchNode->next;
+        }
+        else
+            searchNode = searchNode->next;
+    }
+
+    if (flag == 0)
+        printf("Employee not found\n");
+}
+
+//Search Employees Details by ID
+void search_Employee_By_ID()
+{
+    int value;
+    struct employee *searchNode = head;
+    int flag = 0;
+    printf("Enter ID for search.\n");
+    printf("Search>> ");
+    scanf("%d", &value);
+    while (searchNode != NULL)
+    {
+        if (searchNode->ID == value)
+        {
+            printf("\n\nSearch Result.\n");
+            printf("-----------------\n");
+            printf("%d ID employee present in this database.\n", value);
+            printf("Name: ");
+            puts(searchNode->name);
+            printf("Employee ID: %d", searchNode->ID);
             printf("Age: %d\n", searchNode->age);
             printf("Phone Number: 0%d\n", searchNode->phone_number);
             printf("Salary: %.2lf\n", searchNode->salary);
@@ -305,6 +356,8 @@ void search_Employee_By_Age()
     int value;
     struct employee *searchNode = head;
     int flag = 0;
+    printf("Enter age for search.\n");
+    printf("Search>> ");
     scanf("%d", &value);
     while (searchNode != NULL)
     {
@@ -315,6 +368,7 @@ void search_Employee_By_Age()
             printf("%d Age employee present in this database.\n", value);
             printf("Name: ");
             puts(searchNode->name);
+            printf("Employee ID: %d", searchNode->ID);
             printf("Age: %d\n", searchNode->age);
             printf("Phone Number: 0%d\n", searchNode->phone_number);
             printf("Salary: %.2lf\n", searchNode->salary);
@@ -335,6 +389,8 @@ void search_Employee_By_phone()
     int value;
     struct employee *searchNode = head;
     int flag = 0;
+    printf("Enter phone number for search.\n");
+    printf("Search>> ");
     scanf("%d", &value);
     while (searchNode != NULL)
     {
@@ -345,6 +401,7 @@ void search_Employee_By_phone()
             printf("%d Phone Number employee present in this database.\n", value);
             printf("Name: ");
             puts(searchNode->name);
+            printf("Employee ID: %d", searchNode->ID);
             printf("Age: %d\n", searchNode->age);
             printf("Phone Number: 0%d\n", searchNode->phone_number);
             printf("Salary: %.2lf\n", searchNode->salary);
@@ -365,6 +422,8 @@ void search_Employee_By_Salary()
     double value;
     struct employee *searchNode = head;
     int flag = 0;
+    printf("Enter salary for search.\n");
+    printf("Search>> ");
     scanf("%d", &value);
     while (searchNode != NULL)
     {
@@ -375,6 +434,7 @@ void search_Employee_By_Salary()
             printf("%ld Salary employee present in this database.\n", value);
             printf("Name: ");
             puts(searchNode->name);
+            printf("Employee ID: %d", searchNode->ID);
             printf("Age: %d\n", searchNode->age);
             printf("Phone Number: 0%d\n", searchNode->phone_number);
             printf("Salary: %.2lf\n", searchNode->salary);
@@ -395,6 +455,8 @@ void search_Employee_By_Place()
     char value[20];
     struct employee *searchNode = head;
     int flag = 0;
+    printf("Enter area for search.\n");
+    printf("Search>> ");
     getchar();
     gets(value);
     while (searchNode != NULL)
@@ -406,6 +468,7 @@ void search_Employee_By_Place()
             printf("%s area employee present in this database.\n", value);
             printf("Name: ");
             puts(searchNode->name);
+            printf("Employee ID: %d", searchNode->ID);
             printf("Age: %d\n", searchNode->age);
             printf("Phone Number: 0%d\n", searchNode->phone_number);
             printf("Salary: %.2lf\n", searchNode->salary);
@@ -504,10 +567,11 @@ int main()
                     printf("\nChoose your Searching Option.\n");
                     printf("-------------------------------\n");
                     printf("1.Search by Name\n");
-                    printf("2.Search by Age\n");
-                    printf("3.Search by Phone Number\n");
-                    printf("4.Search by Salary\n");
-                    printf("5.Search by Place\n");
+                    printf("2.Search by ID\n");
+                    printf("3.Search by Age\n");
+                    printf("4.Search by Phone Number\n");
+                    printf("5.Search by Salary\n");
+                    printf("6.Search by Place\n");
                     printf("Search>> ");
                     scanf("%d", &option2);
                     switch (option2) //search option
@@ -517,18 +581,22 @@ int main()
                         search_Employee_By_Name();
                         break;
                     case 2:
+                        //Search Employee details using by ID
+                        search_Employee_By_ID();
+                        break;
+                    case 3:
                         //Search Employee details using by Age
                         search_Employee_By_Age();
                         break;
-                    case 3:
+                    case 4:
                         //Search Employee details using by Phone Number
                         search_Employee_By_phone();
                         break;
-                    case 4:
+                    case 5:
                         //Search Employee details using by Salary
                         search_Employee_By_Salary();
                         break;
-                    case 5:
+                    case 6:
                         //Search Employee details using by Area
                         search_Employee_By_Place();
                         break;
