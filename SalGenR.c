@@ -268,14 +268,18 @@ void delete_Employee_Record()
 
         if (myNode->ID == value)
         {
+
             printf("\nDo you Really delete this Employee Record\n");
-            printf("-----------------------------------------\n");
-            printf("Name: ");
-            puts(myNode->name);
-            printf("Employee ID: %d\n", myNode->ID);
-            printf("Age: %d\n", myNode->age);
-            printf("Phone Number: 0%d\n", myNode->phone_number);
-            printf("Salary: %.2lf\n", myNode->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| %-19s", myNode->name);
+            printf("| %-9d", myNode->ID);
+            printf("| %-7d", myNode->age);
+            printf("| 0%-13d", myNode->phone_number);
+            printf("| %-19s", myNode->address);
+            printf("| %-13.3lf|\n", myNode->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
             printf("\n\nFor Delete this record (type 1): ");
             scanf("%d", &key);
             if (key == 1)
@@ -286,7 +290,7 @@ void delete_Employee_Record()
                 else
                     previous->next = myNode->next;
 
-                printf("%d is deleted from list\n", value);
+                printf("\n%d ID records is deleted from Database\n", value);
 
                 flag = 1;
                 free(myNode); //need to free up the memory to prevent memory leak
@@ -316,19 +320,22 @@ void search_Employee_By_Name()
     printf("\nSearch>> ");
     getchar();
     gets(value);
+    printf("\n\nSearch Result.\n");
     while (searchNode != NULL)
     {
         if (strlwr(searchNode->name) == strlwr(value))
         {
-            printf("\n\nSearch Result.\n");
-            printf("-----------------\n");
-            printf("%s Name employee present in this database.\n", value);
-            printf("Name: ");
-            puts(searchNode->name);
-            printf("Employee ID: %d\n", searchNode->ID);
-            printf("Age: %d\n", searchNode->age);
-            printf("Phone Number: 0%d\n", searchNode->phone_number);
-            printf("Salary: %.2lf\n", searchNode->salary);
+
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| %-19s", searchNode->name);
+            printf("| %-9d", searchNode->ID);
+            printf("| %-7d", searchNode->age);
+            printf("| 0%-13d", searchNode->phone_number);
+            printf("| %-19s", searchNode->address);
+            printf("| %-13.3lf|\n", searchNode->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
             flag = 1;
             searchNode = searchNode->next;
         }
@@ -350,19 +357,21 @@ void search_Employee_By_ID()
     printf("----------------------\n");
     printf("\nSearch>> ");
     scanf("%d", &value);
+    printf("\n\nSearch Result.\n");
     while (searchNode != NULL)
     {
         if (searchNode->ID == value)
         {
-            printf("\n\nSearch Result.\n");
-            printf("-----------------\n");
-            printf("%d ID employee present in this database.\n", value);
-            printf("Name: ");
-            puts(searchNode->name);
-            printf("Employee ID: %d\n", searchNode->ID);
-            printf("Age: %d\n", searchNode->age);
-            printf("Phone Number: 0%d\n", searchNode->phone_number);
-            printf("Salary: %.2lf\n", searchNode->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| %-19s", searchNode->name);
+            printf("| %-9d", searchNode->ID);
+            printf("| %-7d", searchNode->age);
+            printf("| 0%-13d", searchNode->phone_number);
+            printf("| %-19s", searchNode->address);
+            printf("| %-13.3lf|\n", searchNode->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
             flag = 1;
             searchNode = searchNode->next;
         }
@@ -384,19 +393,21 @@ void search_Employee_By_Age()
     printf("-----------------------\n");
     printf("\nSearch>> ");
     scanf("%d", &value);
+    printf("\n\nSearch Result.\n");
     while (searchNode != NULL)
     {
         if (searchNode->age == value)
         {
-            printf("\n\nSearch Result.\n");
-            printf("-----------------\n");
-            printf("%d Age employee present in this database.\n", value);
-            printf("Name: ");
-            puts(searchNode->name);
-            printf("Employee ID: %d\n", searchNode->ID);
-            printf("Age: %d\n", searchNode->age);
-            printf("Phone Number: 0%d\n", searchNode->phone_number);
-            printf("Salary: %.2lf\n", searchNode->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| %-19s", searchNode->name);
+            printf("| %-9d", searchNode->ID);
+            printf("| %-7d", searchNode->age);
+            printf("| 0%-13d", searchNode->phone_number);
+            printf("| %-19s", searchNode->address);
+            printf("| %-13.3lf|\n", searchNode->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
             flag = 1;
             searchNode = searchNode->next;
         }
@@ -418,19 +429,21 @@ void search_Employee_By_phone()
     printf("------------------------------\n");
     printf("\nSearch>> ");
     scanf("%d", &value);
+    printf("\n\nSearch Result.\n");
     while (searchNode != NULL)
     {
         if (searchNode->phone_number == value)
         {
-            printf("\n\nSearch Result.\n");
-            printf("-----------------\n");
-            printf("%d Phone Number employee present in this database.\n", value);
-            printf("Name: ");
-            puts(searchNode->name);
-            printf("Employee ID: %d\n", searchNode->ID);
-            printf("Age: %d\n", searchNode->age);
-            printf("Phone Number: 0%d\n", searchNode->phone_number);
-            printf("Salary: %.2lf\n", searchNode->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| %-19s", searchNode->name);
+            printf("| %-9d", searchNode->ID);
+            printf("| %-7d", searchNode->age);
+            printf("| 0%-13d", searchNode->phone_number);
+            printf("| %-19s", searchNode->address);
+            printf("| %-13.3lf|\n", searchNode->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
             flag = 1;
             searchNode = searchNode->next;
         }
@@ -452,19 +465,21 @@ void search_Employee_By_Salary()
     printf("------------------------\n");
     printf("\nSearch>> ");
     scanf("%ld", &value);
+    printf("\n\nSearch Result.\n");
     while (searchNode != NULL)
     {
         if (searchNode->salary == value)
         {
-            printf("\n\nSearch Result.\n");
-            printf("-----------------\n");
-            printf("%ld Salary employee present in this database.\n", value);
-            printf("Name: ");
-            puts(searchNode->name);
-            printf("Employee ID: %d\n", searchNode->ID);
-            printf("Age: %d\n", searchNode->age);
-            printf("Phone Number: 0%d\n", searchNode->phone_number);
-            printf("Salary: %.2lf\n", searchNode->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| %-19s", searchNode->name);
+            printf("| %-9d", searchNode->ID);
+            printf("| %-7d", searchNode->age);
+            printf("| 0%-13d", searchNode->phone_number);
+            printf("| %-19s", searchNode->address);
+            printf("| %-13.3lf|\n", searchNode->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
             flag = 1;
             searchNode = searchNode->next;
         }
@@ -482,24 +497,26 @@ void search_Employee_By_Place()
     char value[20];
     struct employee *searchNode = head;
     int flag = 0; //this variable check for search result validity
-    printf("\nEnter area for search.\n");
+    printf("\nEnter address for search.\n");
     printf("----------------------\n");
     printf("\nSearch>> ");
     getchar();
     gets(value);
+    printf("\n\nSearch Result.\n");
     while (searchNode != NULL)
     {
-        if (strlwr(searchNode->name) == strlwr(value))
+        if (strlwr(searchNode->address) == strlwr(value))
         {
-            printf("\n\nSearch Result.\n");
-            printf("-----------------\n");
-            printf("%s area employee present in this database.\n", value);
-            printf("Name: ");
-            puts(searchNode->name);
-            printf("Employee ID: %d\n", searchNode->ID);
-            printf("Age: %d\n", searchNode->age);
-            printf("Phone Number: 0%d\n", searchNode->phone_number);
-            printf("Salary: %.2lf\n", searchNode->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| %-19s", searchNode->name);
+            printf("| %-9d", searchNode->ID);
+            printf("| %-7d", searchNode->age);
+            printf("| 0%-13d", searchNode->phone_number);
+            printf("| %-19s", searchNode->address);
+            printf("| %-13.3lf|\n", searchNode->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
             flag = 1;
             searchNode = searchNode->next;
         }
@@ -530,13 +547,16 @@ bool modify_Employee_Name()
         if (strcmp(current->name, old) == 0)
         {
             printf("\n%s this name found employee.", old);
-            printf("-----------------------------------\n");
-            printf("Name: ");
-            puts(current->name);
-            printf("Employee ID: %d\n", current->ID);
-            printf("Age: %d\n", current->age);
-            printf("Phone Number: 0%d\n", current->phone_number);
-            printf("Salary: %.2lf\n", current->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| %-19s", current->name);
+            printf("| %-9d", current->ID);
+            printf("| %-7d", current->age);
+            printf("| 0%-13d", current->phone_number);
+            printf("| %-19s", current->address);
+            printf("| %-13.3lf|\n", current->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
             printf("\nDo You want to Modifie this Records?(1 = Yes, 2 = No)\n");
             printf("--------------------------------------------------------\n");
             scanf("%d ", &key);
@@ -574,13 +594,16 @@ bool modify_Employee_ID()
         if (current->ID == old)
         {
             printf("\n%d this ID found employee.\n", old);
-            printf("-----------------------------------\n");
-            printf("Name: ");
-            puts(current->name);
-            printf("Employee ID: %d\n", current->ID);
-            printf("Age: %d\n", current->age);
-            printf("Phone Number: 0%d\n", current->phone_number);
-            printf("Salary: %.2lf\n", current->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| %-19s", current->name);
+            printf("| %-9d", current->ID);
+            printf("| %-7d", current->age);
+            printf("| 0%-13d", current->phone_number);
+            printf("| %-19s", current->address);
+            printf("| %-13.3lf|\n", current->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
             printf("\nDo You want to Modifie this Records?(1 = Yes, 2 = No)\n");
             printf("--------------------------------------------------------\n");
             scanf("%d ", &key);
@@ -598,12 +621,16 @@ bool modify_Employee_ID()
         {
             printf("\n%d this ID found employee.", old);
             printf("-----------------------------------\n");
-            printf("Name: ");
-            puts(current->name);
-            printf("Employee ID: %d\n", current->ID);
-            printf("Age: %d\n", current->age);
-            printf("Phone Number: 0%d\n", current->phone_number);
-            printf("Salary: %.2lf\n", current->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| %-19s", current->name);
+            printf("| %-9d", current->ID);
+            printf("| %-7d", current->age);
+            printf("| 0%-13d", current->phone_number);
+            printf("| %-19s", current->address);
+            printf("| %-13.3lf|\n", current->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
             printf("\nDo You want to Modifie this Records?(1 = Yes, 2 = No)\n");
             printf("--------------------------------------------------------\n");
             scanf("%d ", &key);
