@@ -19,6 +19,7 @@ struct employee
     int ID;
     int age;
     int phone_number;
+    char address[20];
     double salary;
     struct employee *next;
 } * head, *tail, *mod;
@@ -43,7 +44,7 @@ bool loginCheck(char name[15], char pass[15])
 void create_linked_list()
 {
     int n, i = 1;
-    char name[20];
+    char name[20], address[20];
     int age, pnumber, id;
     double salary;
     printf("\nEnter Amount of Employee: ");
@@ -61,6 +62,9 @@ void create_linked_list()
         scanf("%d", &age);
         printf("Enter Phone number: ");
         scanf("%d", &pnumber);
+        printf("Enter Address: ");
+        getchar();
+        gets(address);
         printf("Enter Salary: ");
         scanf("%lf", &salary);
 
@@ -70,6 +74,7 @@ void create_linked_list()
         temp_node->age = age;
         temp_node->ID = id;
         temp_node->phone_number = pnumber;
+        strcpy(temp_node->address, address);
         temp_node->salary = salary;
         temp_node->next = NULL;
 
@@ -91,7 +96,7 @@ void create_linked_list()
 //insert Node in linklist at last
 void insert_at_last()
 {
-    char name[20];
+    char name[20], address[20];
     int age, pnumber, id;
     double salary;
     //scanning all details of employee
@@ -105,6 +110,9 @@ void insert_at_last()
     scanf("%d", &age);
     printf("Enter Phone number: ");
     scanf("%d", &pnumber);
+    printf("Enter Address: ");
+    getchar();
+    gets(address);
     printf("Enter Salary: ");
     scanf("%lf", &salary);
     //store value in linklist
@@ -114,6 +122,7 @@ void insert_at_last()
     temp_node->ID = id;
     temp_node->age = age;
     temp_node->phone_number = pnumber;
+    strcpy(temp_node->address, address);
     temp_node->salary = salary;
     temp_node->next = NULL;
 
@@ -133,7 +142,7 @@ void insert_at_last()
 //insert nodes at first
 void insert_at_first()
 {
-    char name[20];
+    char name[20], address[20];
     int age, pnumber, id;
     double salary;
     printf("Enter Details for Employee.\n");
@@ -146,6 +155,9 @@ void insert_at_first()
     scanf("%d", &age);
     printf("Enter Phone number: ");
     scanf("%d", &pnumber);
+    printf("Enter Address: ");
+    getchar();
+    gets(address);
     printf("Enter Salary: ");
     scanf("%lf", &salary);
     struct employee *temp_node = (struct employee *)malloc(sizeof(struct employee));
@@ -153,6 +165,7 @@ void insert_at_first()
     temp_node->ID = id;
     temp_node->age = age;
     temp_node->phone_number = pnumber;
+    strcpy(temp_node->address, address);
     temp_node->salary = salary;
     temp_node->next = head;
     head = temp_node;
@@ -165,7 +178,7 @@ void insert_after_postiton()
     int flag = 0;
     printf("Enter position for insert Employee: ");
     scanf("%d", &key);
-    char name[20];
+    char name[20], address[20];
     int age, pnumber, id;
     double salary;
     printf("Enter Details for Employee.\n");
@@ -178,6 +191,9 @@ void insert_after_postiton()
     scanf("%d", &age);
     printf("Enter Phone number: ");
     scanf("%d", &pnumber);
+    printf("Enter Address: ");
+    getchar();
+    gets(address);
     printf("Enter Salary: ");
     scanf("%lf", &salary);
     while (myNode != NULL)
@@ -189,6 +205,7 @@ void insert_after_postiton()
             newNode->ID = id;
             newNode->age = age;
             newNode->phone_number = pnumber;
+            strcpy(newNode->address, address);
             newNode->salary = salary;
             newNode->next = myNode->next;
             myNode->next = newNode;
@@ -221,12 +238,18 @@ void print_employee_list()
         while (temp != NULL)
         {
             printf("\n\nDetails for Employee %d\n", i);
-            printf("Name: ");
-            puts(temp->name);
-            printf("Employee ID: %d\n", temp->ID);
-            printf("Age: %d\n", temp->age);
-            printf("Phone Number: 0%d\n", temp->phone_number);
-            printf("Salary: %.2lf\n", temp->salary);
+
+            /*  20-10-8-15-20-14 */
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| %-19s", temp->name);
+            printf("| %-9d", temp->ID);
+            printf("| %-7d", temp->age);
+            printf("| 0%-13d", temp->phone_number);
+            printf("| %-19s", temp->address);
+            printf("| %-13lf|\n", temp->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
             temp = temp->next;
             i++;
         }
