@@ -43,6 +43,7 @@ bool loginCheck(char name[15], char pass[15])
 //Creating or adding linklist continiously
 void create_linked_list()
 {
+    //local variables for work
     int n, i = 1;
     char name[20], address[20];
     int age, pnumber, id;
@@ -52,6 +53,7 @@ void create_linked_list()
 
     while (n--)
     {
+        //inputting details
         printf("\nEnter Details for Employee %d\n", i);
         printf("Enter Name: ");
         getchar();
@@ -68,9 +70,10 @@ void create_linked_list()
         printf("Enter Salary: ");
         scanf("%lf", &salary);
 
+        //creating node and fill up value which is inputted avobe
         struct employee *temp_node;
-        temp_node = (struct employee *)malloc(sizeof(struct employee));
-        strcpy(temp_node->name, name);
+        temp_node = (struct employee *)malloc(sizeof(struct employee)); //dynamiclly allocated
+        strcpy(temp_node->name, name);                                  //string copy function .
         temp_node->age = age;
         temp_node->ID = id;
         temp_node->phone_number = pnumber;
@@ -160,6 +163,8 @@ void insert_at_first()
     gets(address);
     printf("Enter Salary: ");
     scanf("%lf", &salary);
+
+    //creating node
     struct employee *temp_node = (struct employee *)malloc(sizeof(struct employee));
     strcpy(temp_node->name, name);
     temp_node->ID = id;
@@ -173,6 +178,7 @@ void insert_at_first()
 
 void insert_after_postiton()
 {
+    //local variables
     int key;
     struct employee *myNode = head;
     int flag = 0;
@@ -181,6 +187,8 @@ void insert_after_postiton()
     char name[20], address[20];
     int age, pnumber, id;
     double salary;
+
+    //inputting records
     printf("Enter Details for Employee.\n");
     printf("Enter Name: ");
     getchar();
@@ -196,9 +204,10 @@ void insert_after_postiton()
     gets(address);
     printf("Enter Salary: ");
     scanf("%lf", &salary);
-    while (myNode != NULL)
+
+    while (myNode != NULL) // if mynode pointer will NULL then this loop will be stop
     {
-        if (myNode->ID == key)
+        if (myNode->ID == key) // ID matching
         {
             struct employee *newNode = (struct employee *)malloc(sizeof(struct employee));
             strcpy(newNode->name, name);
@@ -217,17 +226,23 @@ void insert_after_postiton()
             break;
         }
         else
+        {
             myNode = myNode->next;
+        }
     }
 
+    //if ID not matched or not found then this messege will be show
     if (flag == 0)
-        printf("Key not found!\n");
+    {
+        printf("ID not found!\n");
+    }
 }
 
 //print all employees details
 void print_employee_list()
 {
-    struct employee *temp = head;
+    struct employee *temp = head; //creating a temporary pointer for traverse
+    //if database is empty then this messege will be show
     if (head == NULL)
     {
         printf("\nEmployee list is Empty\n");
@@ -270,6 +285,7 @@ void delete_Employee_Record()
         {
 
             printf("\nDo you Really delete this Employee Record\n");
+            //after entry ID match then this will be  print
             printf("----------------------------------------------------------------------------------------------\n");
             printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
             printf("----------------------------------------------------------------------------------------------\n");
@@ -282,14 +298,19 @@ void delete_Employee_Record()
             printf("----------------------------------------------------------------------------------------------\n");
             printf("\n\nFor Delete this record (type 1): ");
             scanf("%d", &key);
+            //if user input = 1 then delete function will be work
             if (key == 1)
             {
 
                 if (previous == NULL)
+                {
                     head = myNode->next;
+                }
                 else
+                {
                     previous->next = myNode->next;
-
+                }
+                //after delete records this messsege will be print
                 printf("\n%d ID records is deleted from Database\n", value);
 
                 flag = 1;
@@ -305,7 +326,7 @@ void delete_Employee_Record()
         myNode = myNode->next;
     }
 
-    if (flag == 0)
+    if (flag == 0) // if user input not match with database this messege will be show
         printf("\nThis ID not found!\n");
 }
 
@@ -325,7 +346,7 @@ void search_Employee_By_Name()
     {
         if (strlwr(searchNode->name) == strlwr(value))
         {
-
+            //print data after search
             printf("----------------------------------------------------------------------------------------------\n");
             printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
             printf("----------------------------------------------------------------------------------------------\n");
@@ -340,11 +361,15 @@ void search_Employee_By_Name()
             searchNode = searchNode->next;
         }
         else
+        {
             searchNode = searchNode->next;
+        }
     }
 
     if (flag == 0)
+    {
         printf("\nEmployee not found for this (%s) name\n", value);
+    }
 }
 
 //Search Employees Details by ID
@@ -380,7 +405,9 @@ void search_Employee_By_ID()
     }
 
     if (flag == 0)
+    {
         printf("\nEmployee not found for this (%d) ID\n", value);
+    }
 }
 
 //Search Employees Details by Age
@@ -398,6 +425,7 @@ void search_Employee_By_Age()
     {
         if (searchNode->age == value)
         {
+            //print data
             printf("----------------------------------------------------------------------------------------------\n");
             printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
             printf("----------------------------------------------------------------------------------------------\n");
@@ -416,7 +444,9 @@ void search_Employee_By_Age()
     }
 
     if (flag == 0)
+    {
         printf("\nEmployee not found for this (%d) Age\n", value);
+    }
 }
 
 //Search Employees Details by Phone Number
@@ -452,7 +482,9 @@ void search_Employee_By_phone()
     }
 
     if (flag == 0)
+    {
         printf("\nEmployee not found for this (0%d) Phone number\n", value);
+    }
 }
 
 //Search Employees Details by Salary
@@ -488,13 +520,15 @@ void search_Employee_By_Salary()
     }
 
     if (flag == 0)
+    {
         printf("\nEmployee not found for this (%ld) salary\n", value);
+    }
 }
 
 //Search Employees Details by Place
 void search_Employee_By_Place()
 {
-    char value[20];
+    char value[20]; //input address in this
     struct employee *searchNode = head;
     int flag = 0; //this variable check for search result validity
     printf("\nEnter address for search.\n");
@@ -525,7 +559,9 @@ void search_Employee_By_Place()
     }
 
     if (flag == 0)
+    {
         printf("\nEmployee not found for this (%s) Place\n", value);
+    }
 }
 
 //modifie section
@@ -577,11 +613,12 @@ bool modify_Employee_Name()
     printf("%s does not exist in the list\n", old);
 }
 
+//modify function using by ID
 bool modify_Employee_ID()
 {
-    int old;
-    int pos = 0, key;
-    if (head == NULL)
+    int old;          //old value
+    int pos = 0, key; //position and option change value variable
+    if (head == NULL) // check database impty or not
     {
         printf("\nDatabase not Found!\n");
         return false;
@@ -713,6 +750,7 @@ void change_Records(struct employee *current)
 // logo function
 void printLogo()
 {
+    //logo using ascii codes
     printf("        _____       _  _____            _____        \n");
     printf("       / ____|     | |/ ____|          |  __ \\       \n");
     printf("      | (___   __ _| | |  __  ___ _ __ | |__) |      \n");
@@ -764,6 +802,7 @@ int main()
                     printf("2.Add Employee at First.\n");
                     printf("3.Add Employee in position\n");
                     printf("4.Add Employee at Last.\n");
+                    printf("5.Back\n");
                     printf("\nAdd New>> ");
                     scanf("%d", &option1); //options for add new section
                     switch (option1)
@@ -783,6 +822,9 @@ int main()
                         //this case for store Employees details from Last Node
                         insert_at_last();
                         break;
+                    case 5:
+                        //this section for back previous menu
+                        break;
                     default:
                         //if user input a unvalid option which is not match on above.
                         printf("You Need to select valid option\n");
@@ -794,6 +836,7 @@ int main()
                     print_employee_list();
                     break;
                 case 3:
+                    //this exit function will exit this program
                     exit(0);
                     break;
                 case 4:
@@ -815,6 +858,7 @@ int main()
                     printf("4.Search by Phone Number\n");
                     printf("5.Search by Salary\n");
                     printf("6.Search by Place\n");
+                    printf("7.Back\n");
                     printf("\nSearch>> ");
                     scanf("%d", &option2);
                     switch (option2) //search option
@@ -842,6 +886,9 @@ int main()
                     case 6:
                         //Search Employee details using by Area
                         search_Employee_By_Place();
+                        break;
+                    case 7:
+                        //this section for back main menu
                         break;
                     default:
                         //if user input not vaild
