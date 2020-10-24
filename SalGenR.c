@@ -234,24 +234,23 @@ void print_employee_list()
     }
     else
     {
-        int i = 1;
+
+        /*  20-10-8-15-20-14 */
+        printf("\n\nDetails for Employee.\n");
+        printf("----------------------------------------------------------------------------------------------\n");
+        printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+        printf("----------------------------------------------------------------------------------------------\n");
+
         while (temp != NULL)
         {
-            printf("\n\nDetails for Employee %d\n", i);
-
-            /*  20-10-8-15-20-14 */
-            printf("----------------------------------------------------------------------------------------------\n");
-            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
-            printf("----------------------------------------------------------------------------------------------\n");
             printf("| %-19s", temp->name);
             printf("| %-9d", temp->ID);
             printf("| %-7d", temp->age);
             printf("| 0%-13d", temp->phone_number);
             printf("| %-19s", temp->address);
-            printf("| %-13lf|\n", temp->salary);
+            printf("| %-13.3lf|\n", temp->salary);
             printf("----------------------------------------------------------------------------------------------\n");
             temp = temp->next;
-            i++;
         }
     }
 }
