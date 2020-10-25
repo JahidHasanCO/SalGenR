@@ -182,33 +182,34 @@ void insert_after_postiton()
     int key;
     struct employee *myNode = head;
     int flag = 0;
-    printf("Enter position for insert Employee: ");
+    printf("Enter previous ID for insert Employee next: ");
     scanf("%d", &key);
     char name[20], address[20];
     int age, pnumber, id;
     double salary;
 
-    //inputting records
-    printf("Enter Details for Employee.\n");
-    printf("Enter Name: ");
-    getchar();
-    gets(name);
-    printf("Enter ID: ");
-    scanf("%d", &id);
-    printf("Enter Age: ");
-    scanf("%d", &age);
-    printf("Enter Phone number: ");
-    scanf("%d", &pnumber);
-    printf("Enter Address: ");
-    getchar();
-    gets(address);
-    printf("Enter Salary: ");
-    scanf("%lf", &salary);
-
     while (myNode != NULL) // if mynode pointer will NULL then this loop will be stop
     {
         if (myNode->ID == key) // ID matching
         {
+            //inputting records
+            printf("Enter Details for Employee.\n");
+            printf("Enter Name: ");
+            getchar();
+            gets(name);
+            printf("Enter ID: ");
+            scanf("%d", &id);
+            printf("Enter Age: ");
+            scanf("%d", &age);
+            printf("Enter Phone number: ");
+            scanf("%d", &pnumber);
+            printf("Enter Address: ");
+            getchar();
+            gets(address);
+            printf("Enter Salary: ");
+            scanf("%lf", &salary);
+
+            //Dynamiclly allocated
             struct employee *newNode = (struct employee *)malloc(sizeof(struct employee));
             strcpy(newNode->name, name);
             newNode->ID = id;
@@ -251,7 +252,7 @@ void print_employee_list()
     {
 
         /*  20-10-8-15-20-14 */
-        printf("\n\nDetails for Employee.\n");
+        printf("\n\n                                     All Employee Details                                     \n");
         printf("----------------------------------------------------------------------------------------------\n");
         printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
         printf("----------------------------------------------------------------------------------------------\n");
@@ -344,7 +345,7 @@ void search_Employee_By_Name()
     printf("\n\nSearch Result.\n");
     while (searchNode != NULL)
     {
-        if (strlwr(searchNode->name) == strlwr(value))
+        if (strcmp(strlwr(searchNode->name), strlwr(value)) == 0)
         {
             //print data after search
             printf("----------------------------------------------------------------------------------------------\n");
@@ -546,7 +547,7 @@ void search_Employee_By_Place()
     printf("\n\nSearch Result.\n");
     while (searchNode != NULL)
     {
-        if (strlwr(searchNode->address) == strlwr(value))
+        if (strcmp(strlwr(searchNode->address), strlwr(value)) == 0)
         {
             printf("----------------------------------------------------------------------------------------------\n");
             printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
