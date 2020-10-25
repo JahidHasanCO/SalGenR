@@ -22,7 +22,7 @@ struct employee
     char address[20];
     double salary;
     struct employee *next;
-} * head, *tail, *mod;
+} * head, *tail, *mod; //head pointer for first node , tail pointer for last node, and mod pointer for  modification records
 
 // login section
 bool loginCheck(char name[15], char pass[15])
@@ -39,6 +39,10 @@ bool loginCheck(char name[15], char pass[15])
         return false; //if Username and Password are not matched then it returns a flase value
     }
 }
+
+/*
+    Insert section start 
+*/
 
 //Creating or adding linklist continiously
 void create_linked_list()
@@ -118,6 +122,7 @@ void insert_at_last()
     gets(address);
     printf("Enter Salary: ");
     scanf("%lf", &salary);
+
     //store value in linklist
     struct employee *temp_node;
     temp_node = (struct employee *)malloc(sizeof(struct employee));
@@ -239,6 +244,10 @@ void insert_after_postiton()
     }
 }
 
+/*
+    Insert section end 
+*/
+
 //print all employees details
 void print_employee_list()
 {
@@ -270,6 +279,9 @@ void print_employee_list()
         }
     }
 }
+
+/*Delete section start 
+*/
 
 //Delete Employees Record
 void delete_Employee_Record()
@@ -330,6 +342,14 @@ void delete_Employee_Record()
     if (flag == 0) // if user input not match with database this messege will be show
         printf("\nThis ID not found!\n");
 }
+
+/*
+    Delete section End
+*/
+
+/*
+    Search section start 
+*/
 
 //Search Employees Details by Name
 void search_Employee_By_Name()
@@ -451,6 +471,7 @@ void search_Employee_By_Age()
 
     if (flag == 0)
     {
+        //if user given age and stored age not matched then this messege will be print
         printf("\nEmployee not found for this (%d) Age\n", value);
     }
 }
@@ -490,6 +511,7 @@ void search_Employee_By_phone()
 
     if (flag == 0)
     {
+        //if user given phone number and stored phone number not matched then this messege will be print
         printf("\nEmployee not found for this (0%d) Phone number\n", value);
     }
 }
@@ -507,6 +529,7 @@ void search_Employee_By_Salary()
     printf("\n\nSearch Result.\n");
     while (searchNode != NULL)
     {
+        //if user input salary and stored salary are match then this condition will be true
         if (searchNode->salary == value)
         {
             printf("----------------------------------------------------------------------------------------------\n");
@@ -573,7 +596,14 @@ void search_Employee_By_Place()
     }
 }
 
-//modifie section
+/*
+    Search section End 
+*/
+
+/*
+    modifie section start 
+*/
+
 bool modify_Employee_Name()
 {
     char old[20];
@@ -620,7 +650,7 @@ bool modify_Employee_Name()
         pos++;
     }
 
-    printf("%s does not exist in the list\n", old);
+    printf("\n%s name not exist in the Database.\n", old);
 }
 
 //modify function using by ID
@@ -702,7 +732,89 @@ bool modify_Employee_ID()
         pos++;
     }
 
-    printf("%s does not exist in the list\n", old);
+    printf("\n%d ID not exist in the Database.\n", old);
+}
+
+//modify function using by Age
+bool modify_Employee_Age()
+{
+    int old;          //old value
+    int pos = 0, key; //position and option change value variable
+    if (head == NULL) // check database impty or not
+    {
+        printf("\nDatabase not Found!\n");
+        return false;
+    }
+    printf("\nEnter Age for modifie: ");
+    scanf("%d", &old);
+    struct employee *current = head;
+
+    /* this codindition for first node or last node....
+    I mean database has only one node then this condition will be run
+    or database has last node to check then this condition will be run
+    */
+
+    if (current->next == NULL)
+    {
+        if (current->age == old)
+        {
+            printf("\n%d this age found employee.\n", old);
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| %-19s", current->name);
+            printf("| %-9d", current->ID);
+            printf("| %-7d", current->age);
+            printf("| 0%-13d", current->phone_number);
+            printf("| %-19s", current->address);
+            printf("| %-13.3lf|\n", current->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("\nDo You want to Modifie this Records?(1 = Yes, 2 = No)\n");
+            printf("--------------------------------------------------------\n");
+            scanf("%d ", &key);
+            if (key == 1)
+            {
+                mod = current;
+                // printf("\n%s found at position %d, and replaced\n", old, pos);
+                return true;
+            }
+        }
+    }
+    while (current->next != NULL)
+    {
+        if (current->age == old)
+        {
+            printf("\n%d this age found employee.", old);
+            printf("-----------------------------------\n");
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| %-19s", current->name);
+            printf("| %-9d", current->ID);
+            printf("| %-7d", current->age);
+            printf("| 0%-13d", current->phone_number);
+            printf("| %-19s", current->address);
+            printf("| %-13.3lf|\n", current->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("\nDo You want to Modifie this Records?(1 = Yes, 2 = No)\n");
+            printf("--------------------------------------------------------\n");
+            scanf("%d ", &key);
+            if (key == 1)
+            {
+                mod = current;
+                // printf("\n%s found at position %d, and replaced\n", old, pos);
+                return true;
+            }
+        }
+        else
+        {
+            //if user given id and stored id not matched then searchnode traverse the next node
+            current = current->next;
+        }
+        pos++;
+    }
+
+    printf("\n%d age not exist in the Database.\n", old);
 }
 
 void change_Records(struct employee *current)
@@ -764,6 +876,10 @@ void change_Records(struct employee *current)
     mod = NULL;
 }
 
+/*
+    modifie section end 
+*/
+
 // logo function
 void printLogo()
 {
@@ -786,7 +902,7 @@ int main()
     head = NULL; //declareing head to Null
     tail = NULL; //Declaring tail to Null
     mod = NULL;
-    int option, option1, option2; //option for Main manu. Option1 for Add New section. Option2 for Search Section.
+    int option, option1, option2, option3; //option for Main manu. Option1 for Add New section. Option2 for Search Section.
     char name[15], pass[15], name1[20];
     double salary;
     printLogo(); //call printlogo function.
@@ -857,12 +973,46 @@ int main()
                     exit(0);
                     break;
                 case 4:
-                    //Modifie function
-                    if (modify_Employee_ID() == true)
+
+                    //Modifie section start
+                    printf("\nChoose Option.\n");
+                    printf("--------------\n");
+                    printf("1.Modifie by Name.\n");
+                    printf("2.Modifie by ID.\n");
+                    printf("3.Modifie by Age.\n");
+                    printf("4.Modifie by Phone Number.\n");
+                    printf("5.Modifie by Salary\n");
+                    printf("6.Modifie by Address\n");
+                    printf("7.Back\n");
+                    printf("\nModifie>> ");
+                    scanf("%d", &option3);
+
+                    if (option3 == 7)
                     {
-                        change_Records(mod);
+                        break;
                     }
+
+                    switch (option3)
+                    {
+                    case 1:
+                        if (modify_Employee_Name() == true)
+                        {
+                            change_Records(mod);
+                        }
+                        break;
+                    case 2:
+                        if (modify_Employee_ID() == true)
+                        {
+                            change_Records(mod);
+                        }
+                        break;
+                    default:
+                        printf("\nYou need to choose currect option.\n");
+                        break;
+                    }
+
                     break;
+                    //Modifie section end
                 case 5:
 
                     //case 5 ----Search section start
