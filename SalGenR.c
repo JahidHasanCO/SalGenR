@@ -362,12 +362,14 @@ void search_Employee_By_Name()
         }
         else
         {
+            //if user given name and stored name not matched then searchnode traverse the next node
             searchNode = searchNode->next;
         }
     }
 
     if (flag == 0)
     {
+        //if name not matched or ont found then this messges will be print
         printf("\nEmployee not found for this (%s) name\n", value);
     }
 }
@@ -401,11 +403,13 @@ void search_Employee_By_ID()
             searchNode = searchNode->next;
         }
         else
+            //if user given id and stored id not matched then searchnode traverse the next node
             searchNode = searchNode->next;
     }
 
     if (flag == 0)
     {
+        //if id not matched or ont found then this messges will be print
         printf("\nEmployee not found for this (%d) ID\n", value);
     }
 }
@@ -440,6 +444,7 @@ void search_Employee_By_Age()
             searchNode = searchNode->next;
         }
         else
+            //if user given age and stored age not matched then searchnode traverse the next node
             searchNode = searchNode->next;
     }
 
@@ -478,6 +483,7 @@ void search_Employee_By_phone()
             searchNode = searchNode->next;
         }
         else
+            //if user given phone number and stored phone number not matched then searchnode traverse the next node
             searchNode = searchNode->next;
     }
 
@@ -516,6 +522,7 @@ void search_Employee_By_Salary()
             searchNode = searchNode->next;
         }
         else
+            //if user given salary and stored salary not matched then searchnode traverse the next node
             searchNode = searchNode->next;
     }
 
@@ -555,6 +562,7 @@ void search_Employee_By_Place()
             searchNode = searchNode->next;
         }
         else
+            //if user given address and stored address not matched then searchnode traverse the next node
             searchNode = searchNode->next;
     }
 
@@ -605,6 +613,7 @@ bool modify_Employee_Name()
         }
         else
         {
+            //if user given name and stored name not matched then searchnode traverse the next node
             current = current->next;
         }
         pos++;
@@ -626,6 +635,12 @@ bool modify_Employee_ID()
     printf("\nEnter ID for modifie: ");
     scanf("%d", &old);
     struct employee *current = head;
+
+    /* this codindition for first node or last node....
+    I mean database has only one node then this condition will be run
+    or database has last node to check then this condition will be run
+    */
+
     if (current->next == NULL)
     {
         if (current->ID == old)
@@ -680,6 +695,7 @@ bool modify_Employee_ID()
         }
         else
         {
+            //if user given id and stored id not matched then searchnode traverse the next node
             current = current->next;
         }
         pos++;
@@ -903,6 +919,7 @@ int main()
                     delete_Employee_Record();
                     break;
                 default:
+                    //if user not input bettween 1-6 then this messege will be print
                     printf("You Need to choose option into 1-6\n");
                     break;
                 }
