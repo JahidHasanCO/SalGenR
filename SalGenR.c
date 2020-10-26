@@ -296,7 +296,7 @@ void delete_Employee_Record_by_name()
     while (myNode != NULL)
     {
 
-        if (strcmp(myNode->name, value) == 0)
+        if (strcmp(strlwr(myNode->name), strlwr(value)) == 0)
         {
 
             printf("\nDo you Really delete this Employee Record\n");
@@ -463,6 +463,189 @@ void delete_Employee_Record_by_age()
 
     if (flag == 0) // if user input not match with database this messege will be show
         printf("\nThis age not found!\n");
+}
+
+//Delete Employees Record By Phone Number
+void delete_Employee_Record_by_Phone_Number()
+{
+    int value, key;
+    struct employee *myNode = head, *previous = NULL;
+    int flag = 0;
+    printf("Enter Phone Number: ");
+    scanf("%d", &value);
+    while (myNode != NULL)
+    {
+
+        if (myNode->phone_number == value)
+        {
+
+            printf("\nDo you Really delete this Employee Record\n");
+            //after entry ID match then this will be  print
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| %-19s", myNode->name);
+            printf("| %-9d", myNode->ID);
+            printf("| %-7d", myNode->age);
+            printf("| 0%-13d", myNode->phone_number);
+            printf("| %-19s", myNode->address);
+            printf("| %-13.3lf|\n", myNode->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("\n\nFor Delete this record (type 1): ");
+            scanf("%d", &key);
+            //if user input = 1 then delete function will be work
+            if (key == 1)
+            {
+
+                if (previous == NULL)
+                {
+                    head = myNode->next;
+                }
+                else
+                {
+                    previous->next = myNode->next;
+                }
+                //after delete records this messsege will be print
+                printf("\n%d phone Number records is deleted from Database\n", value);
+
+                flag = 1;
+                free(myNode); //need to free up the memory to prevent memory leak
+                break;
+            }
+            else
+            {
+                break;
+            }
+        }
+        previous = myNode;
+        myNode = myNode->next;
+    }
+
+    if (flag == 0) // if user input not match with database this messege will be show
+        printf("\nThis Phone Number not found!\n");
+}
+
+//Delete Employees Record By Salary
+void delete_Employee_Record_by_Salary()
+{
+    double value;
+    int key;
+    struct employee *myNode = head, *previous = NULL;
+    int flag = 0;
+    printf("Enter Salary: ");
+    scanf("%lf", &value);
+    while (myNode != NULL)
+    {
+
+        if (myNode->salary == value)
+        {
+
+            printf("\nDo you Really delete this Employee Record\n");
+            //after entry ID match then this will be  print
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| %-19s", myNode->name);
+            printf("| %-9d", myNode->ID);
+            printf("| %-7d", myNode->age);
+            printf("| 0%-13d", myNode->phone_number);
+            printf("| %-19s", myNode->address);
+            printf("| %-13.3lf|\n", myNode->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("\n\nFor Delete this record (type 1): ");
+            scanf("%d", &key);
+            //if user input = 1 then delete function will be work
+            if (key == 1)
+            {
+
+                if (previous == NULL)
+                {
+                    head = myNode->next;
+                }
+                else
+                {
+                    previous->next = myNode->next;
+                }
+                //after delete records this messsege will be print
+                printf("\n%lf salary records is deleted from Database\n", value);
+
+                flag = 1;
+                free(myNode); //need to free up the memory to prevent memory leak
+                break;
+            }
+            else
+            {
+                break;
+            }
+        }
+        previous = myNode;
+        myNode = myNode->next;
+    }
+
+    if (flag == 0) // if user input not match with database this messege will be show
+        printf("\nThis Salary not found!\n");
+}
+
+//Delete Employees Record By Place
+void delete_Employee_Record_by_Place()
+{
+    char value[20];
+    int key;
+    struct employee *myNode = head, *previous = NULL;
+    int flag = 0;
+    printf("Enter Address: ");
+    getchar();
+    gets(value);
+    while (myNode != NULL)
+    {
+
+        if (strcmp(strlwr(myNode->address), strlwr(value)) == 0)
+        {
+
+            printf("\nDo you Really delete this Employee Record\n");
+            //after entry ID match then this will be  print
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| %-19s", myNode->name);
+            printf("| %-9d", myNode->ID);
+            printf("| %-7d", myNode->age);
+            printf("| 0%-13d", myNode->phone_number);
+            printf("| %-19s", myNode->address);
+            printf("| %-13.3lf|\n", myNode->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("\n\nFor Delete this record (type 1): ");
+            scanf("%d", &key);
+            //if user input = 1 then delete function will be work
+            if (key == 1)
+            {
+
+                if (previous == NULL)
+                {
+                    head = myNode->next;
+                }
+                else
+                {
+                    previous->next = myNode->next;
+                }
+                //after delete records this messsege will be print
+                printf("\n%s Address records is deleted from Database\n", value);
+
+                flag = 1;
+                free(myNode); //need to free up the memory to prevent memory leak
+                break;
+            }
+            else
+            {
+                break;
+            }
+        }
+        previous = myNode;
+        myNode = myNode->next;
+    }
+
+    if (flag == 0) // if user input not match with database this messege will be show
+        printf("\nThis Address not found!\n");
 }
 
 /*
@@ -1321,6 +1504,20 @@ int main()
                     case 3:
                         //if user want to delete record using by age
                         delete_Employee_Record_by_age();
+                        break;
+                    case 4:
+                        //if user want to delete record using by Phone Number
+                        delete_Employee_Record_by_Phone_Number();
+                        break;
+                    case 5:
+                        //if user want to delete record using by Salary
+                        delete_Employee_Record_by_Salary();
+                        break;
+                    case 6:
+                        //if user want to delete record using by Address
+                        delete_Employee_Record_by_Place();
+                        break;
+                    case 7:
                         break;
                     default:
                         //if user input not vaild
