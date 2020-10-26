@@ -283,8 +283,70 @@ void print_employee_list()
 /*Delete section start 
 */
 
-//Delete Employees Record
-void delete_Employee_Record()
+//Delete Employees Record By name
+void delete_Employee_Record_by_name()
+{
+    char value[20];
+    int key;
+    struct employee *myNode = head, *previous = NULL;
+    int flag = 0;
+    printf("Enter Name: ");
+    getchar();
+    gets(value);
+    while (myNode != NULL)
+    {
+
+        if (strcmp(myNode->name, value) == 0)
+        {
+
+            printf("\nDo you Really delete this Employee Record\n");
+            //after entry Name match then this will be  print
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| %-19s", myNode->name);
+            printf("| %-9d", myNode->ID);
+            printf("| %-7d", myNode->age);
+            printf("| 0%-13d", myNode->phone_number);
+            printf("| %-19s", myNode->address);
+            printf("| %-13.3lf|\n", myNode->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("\n\nFor Delete this record (type 1): ");
+            scanf("%d", &key);
+            //if user input = 1 then delete function will be work
+            if (key == 1)
+            {
+
+                if (previous == NULL)
+                {
+                    head = myNode->next;
+                }
+                else
+                {
+                    previous->next = myNode->next;
+                }
+                //after delete records this messsege will be print
+                printf("\n%s Name records is deleted from Database\n", value);
+
+                flag = 1;
+                free(myNode); //need to free up the memory to prevent memory leak
+                break;
+            }
+            else
+            {
+                break;
+            }
+        }
+        previous = myNode;
+        myNode = myNode->next;
+    }
+
+    if (flag == 0) // if user input not match with database this messege will be show
+        printf("\nThis Name not found!\n");
+}
+
+//Delete Employees Record By ID
+void delete_Employee_Record_by_ID()
 {
     int value, key;
     struct employee *myNode = head, *previous = NULL;
@@ -341,6 +403,66 @@ void delete_Employee_Record()
 
     if (flag == 0) // if user input not match with database this messege will be show
         printf("\nThis ID not found!\n");
+}
+
+//Delete Employees Record By age
+void delete_Employee_Record_by_age()
+{
+    int value, key;
+    struct employee *myNode = head, *previous = NULL;
+    int flag = 0;
+    printf("Enter Age: ");
+    scanf("%d", &value);
+    while (myNode != NULL)
+    {
+
+        if (myNode->age == value)
+        {
+
+            printf("\nDo you Really delete this Employee Record\n");
+            //after entry ID match then this will be  print
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| %-19s", myNode->name);
+            printf("| %-9d", myNode->ID);
+            printf("| %-7d", myNode->age);
+            printf("| 0%-13d", myNode->phone_number);
+            printf("| %-19s", myNode->address);
+            printf("| %-13.3lf|\n", myNode->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("\n\nFor Delete this record (type 1): ");
+            scanf("%d", &key);
+            //if user input = 1 then delete function will be work
+            if (key == 1)
+            {
+
+                if (previous == NULL)
+                {
+                    head = myNode->next;
+                }
+                else
+                {
+                    previous->next = myNode->next;
+                }
+                //after delete records this messsege will be print
+                printf("\n%d age records is deleted from Database\n", value);
+
+                flag = 1;
+                free(myNode); //need to free up the memory to prevent memory leak
+                break;
+            }
+            else
+            {
+                break;
+            }
+        }
+        previous = myNode;
+        myNode = myNode->next;
+    }
+
+    if (flag == 0) // if user input not match with database this messege will be show
+        printf("\nThis age not found!\n");
 }
 
 /*
@@ -985,7 +1107,7 @@ int main()
     head = NULL; //declareing head to Null
     tail = NULL; //Declaring tail to Null
     mod = NULL;
-    int option, option1, option2, option3; //option for Main manu. Option1 for Add New section. Option2 for Search Section.
+    int option, option1, option2, option3, option4; //option for Main manu. Option1 for Add New section. Option2 for Search Section.
     char name[15], pass[15], name1[20];
     double salary;
     printLogo(); //call printlogo function.
@@ -1170,9 +1292,45 @@ int main()
                     //case 5 ----search section End
                     break;
                 case 6:
-                    //Delete Employees record
-                    delete_Employee_Record();
+                    //delete section start
+                    printf("\nChoose your Delete Option.\n");
+                    printf("-------------------------------\n");
+                    printf("1.Delete by Name\n");
+                    printf("2.Delete by ID\n");
+                    printf("3.Delete by Age\n");
+                    printf("4.Delete by Phone Number\n");
+                    printf("5.Delete by Salary\n");
+                    printf("6.Delete by Place\n");
+                    printf("7.Back\n");
+                    printf("\nDelete>> ");
+                    scanf("%d", &option4);
+
+                    //switch section start
+                    switch (option4)
+                    {
+                    case 1:
+                        //if user want to delete record using by name
+                        delete_Employee_Record_by_name();
+
+                        break;
+                    case 2:
+                        //if user want to delete record using by ID
+                        delete_Employee_Record_by_ID();
+                        break;
+
+                    case 3:
+                        //if user want to delete record using by age
+                        delete_Employee_Record_by_age();
+                        break;
+                    default:
+                        //if user input not vaild
+                        printf("You have to choose right option\n");
+                        break;
+                    }
+                    //switch section end
+
                     break;
+                    //delete section End
                 default:
                     //if user not input bettween 1-6 then this messege will be print
                     printf("You Need to choose option into 1-6\n");
