@@ -817,6 +817,89 @@ bool modify_Employee_Age()
     printf("\n%d age not exist in the Database.\n", old);
 }
 
+//modify function using by Phone Number
+bool modify_Employee_pnumber()
+{
+    int old;          //old value
+    int pos = 0, key; //position and option change value variable
+    if (head == NULL) // check database impty or not
+    {
+        printf("\nDatabase not Found!\n");
+        return false;
+    }
+    printf("\nEnter Phone Number for modifie: ");
+    scanf("%d", &old);
+    struct employee *current = head;
+
+    /* this codindition for first node or last node....
+    I mean database has only one node then this condition will be run
+    or database has last node to check then this condition will be run
+    */
+
+    if (current->next == NULL)
+    {
+        if (current->phone_number == old)
+        {
+            printf("\n%d this Phone Number found employee.\n", old);
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| %-19s", current->name);
+            printf("| %-9d", current->ID);
+            printf("| %-7d", current->age);
+            printf("| 0%-13d", current->phone_number);
+            printf("| %-19s", current->address);
+            printf("| %-13.3lf|\n", current->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("\nDo You want to Modifie this Records?(1 = Yes, 2 = No)\n");
+            printf("--------------------------------------------------------\n");
+            scanf("%d ", &key);
+            if (key == 1)
+            {
+                mod = current;
+                // printf("\n%s found at position %d, and replaced\n", old, pos);
+                return true;
+            }
+        }
+    }
+    while (current->next != NULL)
+    {
+        if (current->phone_number == old)
+        {
+            printf("\n%d this age found employee.", old);
+            printf("-----------------------------------\n");
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("| %-19s", current->name);
+            printf("| %-9d", current->ID);
+            printf("| %-7d", current->age);
+            printf("| 0%-13d", current->phone_number);
+            printf("| %-19s", current->address);
+            printf("| %-13.3lf|\n", current->salary);
+            printf("----------------------------------------------------------------------------------------------\n");
+            printf("\nDo You want to Modifie this Records?(1 = Yes, 2 = No)\n");
+            printf("--------------------------------------------------------\n");
+            scanf("%d ", &key);
+            if (key == 1)
+            {
+                mod = current;
+                // printf("\n%s found at position %d, and replaced\n", old, pos);
+                return true;
+            }
+        }
+        else
+        {
+            //if user given id and stored id not matched then searchnode traverse the next node
+            current = current->next;
+        }
+        pos++;
+    }
+
+    printf("\n%d Phone Number not exist in the Database.\n", old);
+}
+
+//this function change record if we need to modifie
 void change_Records(struct employee *current)
 {
 
@@ -987,6 +1070,10 @@ int main()
                     printf("\nModifie>> ");
                     scanf("%d", &option3);
 
+                    /*
+                    if user are not want to modifie and leave these menu 
+                    then they can get back previous menu by using this section
+                    */
                     if (option3 == 7)
                     {
                         break;
@@ -995,18 +1082,35 @@ int main()
                     switch (option3)
                     {
                     case 1:
-                        if (modify_Employee_Name() == true)
+                        //if user want to modifie employee by name then this condition will be true
+                        if (modify_Employee_Name() == true) /*if modify function returns a true value then this condition will be true */
                         {
                             change_Records(mod);
                         }
                         break;
                     case 2:
-                        if (modify_Employee_ID() == true)
+                        //if user want to modifie employee by ID then this condition will be true
+                        if (modify_Employee_ID() == true) /*if modify function returns a true value then this condition will be true */
+                        {
+                            change_Records(mod);
+                        }
+                        break;
+                    case 3:
+                        //if user want to modifie employee by age then this condition will be true
+                        if (modify_Employee_Age() == true) /*if modify function returns a true value then this condition will be true */
+                        {
+                            change_Records(mod);
+                        }
+                        break;
+                    case 4:
+                        //if user want to modifie employee by phone Number then this condition will be true
+                        if (modify_Employee_pnumber() == true) /*if modify function returns a true value then this condition will be true */
                         {
                             change_Records(mod);
                         }
                         break;
                     default:
+                        //if user not input a valid option then this messege will be print
                         printf("\nYou need to choose currect option.\n");
                         break;
                     }
