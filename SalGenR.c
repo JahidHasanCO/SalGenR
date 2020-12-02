@@ -6,6 +6,7 @@ We can add new employee , we can search Employee, We can Modify Employees Record
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <conio.h>
 #include <stdbool.h>
 
 #define _Username_ "Admin" //Define a Default Username for Login
@@ -50,6 +51,7 @@ void writeToFile(struct employee *temp_node)
     }
 
     fwrite(temp_node, sizeof(*temp_node), 1, fp);
+    fprintf(fp, "\n");
     fclose(fp);
 }
 
@@ -131,7 +133,7 @@ void create_linked_list()
         strcpy(temp_node->address, address);
         temp_node->salary = salary;
         temp_node->next = NULL;
-        writeToFile(temp_node);
+
         //For the 1st element
         if (head == NULL)
         {
@@ -144,6 +146,7 @@ void create_linked_list()
             tail = temp_node;
         }
         i++;
+        writeToFile(temp_node);
     }
 }
 
@@ -192,6 +195,7 @@ void insert_at_last()
         tail->next = temp_node;
         tail = temp_node;
     }
+    writeToFile(temp_node);
 }
 
 //insert nodes at first
@@ -226,6 +230,7 @@ void insert_at_first()
     temp_node->salary = salary;
     temp_node->next = head;
     head = temp_node;
+    writeToFile(temp_node);
 }
 
 void insert_after_postiton()
@@ -271,7 +276,7 @@ void insert_after_postiton()
             newNode->salary = salary;
             newNode->next = myNode->next;
             myNode->next = newNode;
-
+            writeToFile(myNode);
             printf("New Employee %s is inserted after %d\n", name, key);
 
             flag = 1;
@@ -1354,6 +1359,7 @@ int main()
             /*This is dashboard section after successfull login*/
             while (1)
             {
+
                 printf("\nSelect Your Option From Menu.\n");
                 printf("------------------------------\n");
                 //Options for main Menu.
@@ -1363,6 +1369,7 @@ int main()
                 switch (option)
                 {
                 case 1:
+                    system("cls");
                     //this is adding section. Here we can adding Employees Details various option
                     printf("\nChoose Option.\n");
                     printf("--------------\n");
@@ -1400,6 +1407,7 @@ int main()
                     }
                     break;
                 case 2:
+                    system("cls");
                     //this section for printing Employees records
                     PrintFromFile();
                     break;
@@ -1408,7 +1416,7 @@ int main()
                     exit(0);
                     break;
                 case 4:
-
+                    system("cls");
                     //Modifie section start
                     printf("\nChoose Option.\n");
                     printf("--------------\n");
@@ -1470,7 +1478,7 @@ int main()
                     break;
                     //Modifie section end
                 case 5:
-
+                    system("cls");
                     //case 5 ----Search section start
 
                     printf("\nChoose your Searching Option.\n");
@@ -1522,6 +1530,7 @@ int main()
                     //case 5 ----search section End
                     break;
                 case 6:
+                    system("cls");
                     //delete section start
                     printf("\nChoose your Delete Option.\n");
                     printf("-------------------------------\n");
