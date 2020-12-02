@@ -40,6 +40,53 @@ bool loginCheck(char name[15], char pass[15])
     }
 }
 
+void writeToFile(struct employee *temp_node)
+{
+    FILE *fp;
+    if ((fp = fopen("Database.txt", "a")) == NULL)
+    {
+        printf("\nCan't open file\n");
+        exit(1);
+    }
+
+    fwrite(temp_node, sizeof(*temp_node), 1, fp);
+    fclose(fp);
+}
+
+void PrintFromFile()
+{
+    struct employee *temp_node;
+    FILE *fp;
+    temp_node = (struct employee *)malloc(sizeof(struct employee));
+    head = temp_node;
+    if ((fp = fopen("Database.txt", "r")) == NULL)
+    {
+        printf("No such file\n");
+        exit(1);
+    }
+    if (temp_node == NULL)
+    {
+        printf("NULL\n");
+        exit(1);
+    }
+
+    printf("\n\n                                     All Employee Details                                     \n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    while (fread(temp_node, sizeof(*temp_node), 1, fp) == 1)
+    {
+        printf("| %-19s", temp_node->name);
+        printf("| %-9d", temp_node->ID);
+        printf("| %-7d", temp_node->age);
+        printf("| 0%-13d", temp_node->phone_number);
+        printf("| %-19s", temp_node->address);
+        printf("| %-13.3lf|\n", temp_node->salary);
+        printf("----------------------------------------------------------------------------------------------\n");
+        temp_node = temp_node->next;
+    }
+}
+
 /*
     Insert section start 
 */
@@ -84,7 +131,7 @@ void create_linked_list()
         strcpy(temp_node->address, address);
         temp_node->salary = salary;
         temp_node->next = NULL;
-
+        writeToFile(temp_node);
         //For the 1st element
         if (head == NULL)
         {
@@ -249,36 +296,36 @@ void insert_after_postiton()
 */
 
 //print all employees details
-void print_employee_list()
-{
-    struct employee *temp = head; //creating a temporary pointer for traverse
-    //if database is empty then this messege will be show
-    if (head == NULL)
-    {
-        printf("\nEmployee list is Empty\n");
-    }
-    else
-    {
+// void print_employee_list()
+// {
+//     struct employee *temp = head; //creating a temporary pointer for traverse
+//     //if database is empty then this messege will be show
+//     if (head == NULL)
+//     {
+//         printf("\nEmployee list is Empty\n");
+//     }
+//     else
+//     {
 
-        /*  20-10-8-15-20-14 */
-        printf("\n\n                                     All Employee Details                                     \n");
-        printf("----------------------------------------------------------------------------------------------\n");
-        printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
-        printf("----------------------------------------------------------------------------------------------\n");
+//         /*  20-10-8-15-20-14 */
+//         printf("\n\n                                     All Employee Details                                     \n");
+//         printf("----------------------------------------------------------------------------------------------\n");
+//         printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+//         printf("----------------------------------------------------------------------------------------------\n");
 
-        while (temp != NULL)
-        {
-            printf("| %-19s", temp->name);
-            printf("| %-9d", temp->ID);
-            printf("| %-7d", temp->age);
-            printf("| 0%-13d", temp->phone_number);
-            printf("| %-19s", temp->address);
-            printf("| %-13.3lf|\n", temp->salary);
-            printf("----------------------------------------------------------------------------------------------\n");
-            temp = temp->next;
-        }
-    }
-}
+//         while (temp != NULL)
+//         {
+//             printf("| %-19s", temp->name);
+//             printf("| %-9d", temp->ID);
+//             printf("| %-7d", temp->age);
+//             printf("| 0%-13d", temp->phone_number);
+//             printf("| %-19s", temp->address);
+//             printf("| %-13.3lf|\n", temp->salary);
+//             printf("----------------------------------------------------------------------------------------------\n");
+//             temp = temp->next;
+//         }
+//     }
+// }
 
 /*Delete section start 
 */
@@ -1354,7 +1401,7 @@ int main()
                     break;
                 case 2:
                     //this section for printing Employees records
-                    print_employee_list();
+                    PrintFromFile();
                     break;
                 case 3:
                     //this exit function will exit this program
