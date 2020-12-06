@@ -44,14 +44,13 @@ bool loginCheck(char name[15], char pass[15])
 void writeToFile(struct employee *temp_node)
 {
     FILE *fp;
-    if ((fp = fopen("Database.txt", "a")) == NULL)
+    if ((fp = fopen("Database.bin", "ab")) == NULL)
     {
         printf("\nCan't open file\n");
         exit(1);
     }
 
     fwrite(temp_node, sizeof(*temp_node), 1, fp);
-    fprintf(fp, "\n");
     fclose(fp);
 }
 
@@ -61,7 +60,7 @@ void PrintFromFile()
     FILE *fp;
     temp_node = (struct employee *)malloc(sizeof(struct employee));
     head = temp_node;
-    if ((fp = fopen("Database.txt", "r")) == NULL)
+    if ((fp = fopen("Database.bin", "rb")) == NULL)
     {
         printf("No such file\n");
         exit(1);
@@ -78,6 +77,7 @@ void PrintFromFile()
     printf("----------------------------------------------------------------------------------------------\n");
     while (fread(temp_node, sizeof(*temp_node), 1, fp) == 1)
     {
+
         printf("| %-19s", temp_node->name);
         printf("| %-9d", temp_node->ID);
         printf("| %-7d", temp_node->age);
