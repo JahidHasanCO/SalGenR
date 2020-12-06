@@ -27,6 +27,7 @@ struct employee
 
 // login section
 bool loginCheck(char name[15], char pass[15])
+    
 {
     if (strcmp(name, _Username_) == 0) //checking input Username to stored Username
     {
@@ -65,12 +66,11 @@ void PrintFromFile()
         printf("No such file\n");
         exit(1);
     }
-    fread(temp_node, sizeof(*temp_node), 1, fp);
     printf("\n\n                                     All Employee Details                                     \n");
     printf("----------------------------------------------------------------------------------------------\n");
     printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
     printf("----------------------------------------------------------------------------------------------\n");
-    do
+    while (fread(temp_node, sizeof(*temp_node), 1, fp) == 1)
     {
         printf("| %-19s", temp_node->name);
         printf("| %-9d", temp_node->ID);
@@ -79,13 +79,12 @@ void PrintFromFile()
         printf("| %-19s", temp_node->address);
         printf("| %-13.3lf|\n", temp_node->salary);
         printf("----------------------------------------------------------------------------------------------\n");
-        temp_node = temp_node->next;
-    } while (temp_node->next != NULL);
+    }
     fclose(fp);
 }
 
 /*
-    Insert section start 
+    Insert section start
 */
 
 //Creating or adding linklist continiously
@@ -292,7 +291,7 @@ void insert_after_postiton()
 }
 
 /*
-    Insert section end 
+    Insert section end
 */
 
 //print all employees details
@@ -327,7 +326,7 @@ void insert_after_postiton()
 //     }
 // }
 
-/*Delete section start 
+/*Delete section start
 */
 
 //Delete Employees Record By name
@@ -700,7 +699,7 @@ void delete_Employee_Record_by_Place()
 */
 
 /*
-    Search section start 
+    Search section start
 */
 
 //Search Employees Details by Name
@@ -949,11 +948,11 @@ void search_Employee_By_Place()
 }
 
 /*
-    Search section End 
+    Search section End
 */
 
 /*
-    modifie section start 
+    modifie section start
 */
 
 bool modify_Employee_Name()
@@ -1312,7 +1311,7 @@ void change_Records(struct employee *current)
 }
 
 /*
-    modifie section end 
+    modifie section end
 */
 
 // logo function
@@ -1426,7 +1425,7 @@ int main()
                     scanf("%d", &option3);
 
                     /*
-                    if user are not want to modifie and leave these menu 
+                    if user are not want to modifie and leave these menu
                     then they can get back previous menu by using this section
                     */
                     if (option3 == 7)
