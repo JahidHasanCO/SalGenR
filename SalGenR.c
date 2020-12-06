@@ -65,19 +65,13 @@ void PrintFromFile()
         printf("No such file\n");
         exit(1);
     }
-    if (temp_node == NULL)
-    {
-        printf("NULL\n");
-        exit(1);
-    }
-
+    fread(temp_node, sizeof(*temp_node), 1, fp);
     printf("\n\n                                     All Employee Details                                     \n");
     printf("----------------------------------------------------------------------------------------------\n");
     printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
     printf("----------------------------------------------------------------------------------------------\n");
-    while (fread(temp_node, sizeof(*temp_node), 1, fp) == 1)
+    do
     {
-
         printf("| %-19s", temp_node->name);
         printf("| %-9d", temp_node->ID);
         printf("| %-7d", temp_node->age);
@@ -86,7 +80,8 @@ void PrintFromFile()
         printf("| %-13.3lf|\n", temp_node->salary);
         printf("----------------------------------------------------------------------------------------------\n");
         temp_node = temp_node->next;
-    }
+    } while (temp_node->next != NULL);
+    fclose(fp);
 }
 
 /*
