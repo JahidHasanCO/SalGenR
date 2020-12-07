@@ -27,7 +27,7 @@ struct employee
 
 // login section
 bool loginCheck(char name[15], char pass[15])
-    
+
 {
     if (strcmp(name, _Username_) == 0) //checking input Username to stored Username
     {
@@ -706,22 +706,30 @@ void delete_Employee_Record_by_Place()
 void search_Employee_By_Name()
 {
     char value[20];
-    struct employee *searchNode = head;
+    struct employee *searchNode = (struct employee *)malloc(sizeof(struct employee));
+    FILE *fp;
+    if ((fp = fopen("Database.bin", "rb")) == NULL)
+    {
+        printf("No such file\n");
+        exit(1);
+    }
     int flag = 0; //this variable check for search result validity
     printf("\nEnter name for search.\n");
     printf("----------------------\n");
     printf("\nSearch>> ");
     getchar();
     gets(value);
-    printf("\n\nSearch Result.\n");
-    while (searchNode != NULL)
+    system("CLS");
+    printf("\n\n                                               Search Result.\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    while (fread(searchNode, sizeof(*searchNode), 1, fp) == 1)
     {
         if (strcmp(strlwr(searchNode->name), strlwr(value)) == 0)
         {
             //print data after search
-            printf("----------------------------------------------------------------------------------------------\n");
-            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
-            printf("----------------------------------------------------------------------------------------------\n");
+
             printf("| %-19s", searchNode->name);
             printf("| %-9d", searchNode->ID);
             printf("| %-7d", searchNode->age);
@@ -730,12 +738,6 @@ void search_Employee_By_Name()
             printf("| %-13.3lf|\n", searchNode->salary);
             printf("----------------------------------------------------------------------------------------------\n");
             flag = 1;
-            searchNode = searchNode->next;
-        }
-        else
-        {
-            //if user given name and stored name not matched then searchnode traverse the next node
-            searchNode = searchNode->next;
         }
     }
 
@@ -750,20 +752,28 @@ void search_Employee_By_Name()
 void search_Employee_By_ID()
 {
     int value;
-    struct employee *searchNode = head;
+    struct employee *searchNode = (struct employee *)malloc(sizeof(struct employee));
+    FILE *fp;
+    if ((fp = fopen("Database.bin", "rb")) == NULL)
+    {
+        printf("No such file\n");
+        exit(1);
+    }
     int flag = 0; //this variable check for search result validity
     printf("\nEnter ID for search.\n");
     printf("----------------------\n");
     printf("\nSearch>> ");
     scanf("%d", &value);
-    printf("\n\nSearch Result.\n");
-    while (searchNode != NULL)
+    system("CLS");
+    printf("\n\n                                      Search Result.\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    while (fread(searchNode, sizeof(*searchNode), 1, fp) == 1)
     {
         if (searchNode->ID == value)
         {
-            printf("----------------------------------------------------------------------------------------------\n");
-            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
-            printf("----------------------------------------------------------------------------------------------\n");
+
             printf("| %-19s", searchNode->name);
             printf("| %-9d", searchNode->ID);
             printf("| %-7d", searchNode->age);
@@ -772,11 +782,8 @@ void search_Employee_By_ID()
             printf("| %-13.3lf|\n", searchNode->salary);
             printf("----------------------------------------------------------------------------------------------\n");
             flag = 1;
-            searchNode = searchNode->next;
         }
-        else
-            //if user given id and stored id not matched then searchnode traverse the next node
-            searchNode = searchNode->next;
+        //if user given id and stored id not matched then searchnode traverse the next node
     }
 
     if (flag == 0)
@@ -789,22 +796,29 @@ void search_Employee_By_ID()
 //Search Employees Details by Age
 void search_Employee_By_Age()
 {
+    struct employee *searchNode = (struct employee *)malloc(sizeof(struct employee));
+    FILE *fp;
     int value;
-    struct employee *searchNode = head;
+    if ((fp = fopen("Database.bin", "rb")) == NULL)
+    {
+        printf("No such file\n");
+        exit(1);
+    }
     int flag = 0; //this variable check for search result validity
     printf("\nEnter age for search.\n");
     printf("-----------------------\n");
     printf("\nSearch>> ");
     scanf("%d", &value);
-    printf("\n\nSearch Result.\n");
-    while (searchNode != NULL)
+    system("CLS");
+    printf("\n\n                                      Search Result.\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    while (fread(searchNode, sizeof(*searchNode), 1, fp) == 1)
     {
         if (searchNode->age == value)
         {
             //print data
-            printf("----------------------------------------------------------------------------------------------\n");
-            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
-            printf("----------------------------------------------------------------------------------------------\n");
             printf("| %-19s", searchNode->name);
             printf("| %-9d", searchNode->ID);
             printf("| %-7d", searchNode->age);
@@ -813,11 +827,7 @@ void search_Employee_By_Age()
             printf("| %-13.3lf|\n", searchNode->salary);
             printf("----------------------------------------------------------------------------------------------\n");
             flag = 1;
-            searchNode = searchNode->next;
         }
-        else
-            //if user given age and stored age not matched then searchnode traverse the next node
-            searchNode = searchNode->next;
     }
 
     if (flag == 0)
@@ -830,21 +840,28 @@ void search_Employee_By_Age()
 //Search Employees Details by Phone Number
 void search_Employee_By_phone()
 {
+    struct employee *searchNode = (struct employee *)malloc(sizeof(struct employee));
+    FILE *fp;
     int value;
-    struct employee *searchNode = head;
+    if ((fp = fopen("Database.bin", "rb")) == NULL)
+    {
+        printf("No such file\n");
+        exit(1);
+    }
     int flag = 0; //this variable check for search result validity
     printf("\nEnter phone number for search.\n");
     printf("------------------------------\n");
     printf("\nSearch>> ");
     scanf("%d", &value);
-    printf("\n\nSearch Result.\n");
-    while (searchNode != NULL)
+    printf("\n\n                                      Search Result.\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    while (fread(searchNode, sizeof(*searchNode), 1, fp) == 1)
     {
         if (searchNode->phone_number == value)
         {
-            printf("----------------------------------------------------------------------------------------------\n");
-            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
-            printf("----------------------------------------------------------------------------------------------\n");
+
             printf("| %-19s", searchNode->name);
             printf("| %-9d", searchNode->ID);
             printf("| %-7d", searchNode->age);
@@ -853,11 +870,7 @@ void search_Employee_By_phone()
             printf("| %-13.3lf|\n", searchNode->salary);
             printf("----------------------------------------------------------------------------------------------\n");
             flag = 1;
-            searchNode = searchNode->next;
         }
-        else
-            //if user given phone number and stored phone number not matched then searchnode traverse the next node
-            searchNode = searchNode->next;
     }
 
     if (flag == 0)
@@ -871,21 +884,28 @@ void search_Employee_By_phone()
 void search_Employee_By_Salary()
 {
     double value;
-    struct employee *searchNode = head;
+    struct employee *searchNode = (struct employee *)malloc(sizeof(struct employee));
+    FILE *fp;
+    if ((fp = fopen("Database.bin", "rb")) == NULL)
+    {
+        printf("No such file\n");
+        exit(1);
+    }
     int flag = 0; //this variable check for search result validity
     printf("\nEnter salary for search.\n");
     printf("------------------------\n");
     printf("\nSearch>> ");
     scanf("%ld", &value);
-    printf("\n\nSearch Result.\n");
-    while (searchNode != NULL)
+    printf("\n\n                                      Search Result.\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    while (fread(searchNode, sizeof(*searchNode), 1, fp) == 1)
     {
         //if user input salary and stored salary are match then this condition will be true
         if (searchNode->salary == value)
         {
-            printf("----------------------------------------------------------------------------------------------\n");
-            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
-            printf("----------------------------------------------------------------------------------------------\n");
+
             printf("| %-19s", searchNode->name);
             printf("| %-9d", searchNode->ID);
             printf("| %-7d", searchNode->age);
@@ -894,11 +914,7 @@ void search_Employee_By_Salary()
             printf("| %-13.3lf|\n", searchNode->salary);
             printf("----------------------------------------------------------------------------------------------\n");
             flag = 1;
-            searchNode = searchNode->next;
         }
-        else
-            //if user given salary and stored salary not matched then searchnode traverse the next node
-            searchNode = searchNode->next;
     }
 
     if (flag == 0)
@@ -911,21 +927,28 @@ void search_Employee_By_Salary()
 void search_Employee_By_Place()
 {
     char value[20]; //input address in this
-    struct employee *searchNode = head;
+    struct employee *searchNode = (struct employee *)malloc(sizeof(struct employee));
+    FILE *fp;
+    if ((fp = fopen("Database.bin", "rb")) == NULL)
+    {
+        printf("No such file\n");
+        exit(1);
+    }
     int flag = 0; //this variable check for search result validity
     printf("\nEnter address for search.\n");
     printf("----------------------\n");
     printf("\nSearch>> ");
     getchar();
     gets(value);
-    printf("\n\nSearch Result.\n");
-    while (searchNode != NULL)
+    printf("\n\n                                      Search Result.\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    while (fread(searchNode, sizeof(*searchNode), 1, fp) == 1)
     {
         if (strcmp(strlwr(searchNode->address), strlwr(value)) == 0)
         {
-            printf("----------------------------------------------------------------------------------------------\n");
-            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
-            printf("----------------------------------------------------------------------------------------------\n");
+
             printf("| %-19s", searchNode->name);
             printf("| %-9d", searchNode->ID);
             printf("| %-7d", searchNode->age);
@@ -934,11 +957,7 @@ void search_Employee_By_Place()
             printf("| %-13.3lf|\n", searchNode->salary);
             printf("----------------------------------------------------------------------------------------------\n");
             flag = 1;
-            searchNode = searchNode->next;
         }
-        else
-            //if user given address and stored address not matched then searchnode traverse the next node
-            searchNode = searchNode->next;
     }
 
     if (flag == 0)
@@ -1339,6 +1358,7 @@ int main()
     int option, option1, option2, option3, option4; //option for Main manu. Option1 for Add New section. Option2 for Search Section.
     char name[15], pass[15], name1[20];
     double salary;
+    system("CLS");
     printLogo(); //call printlogo function.
     while (1)
     {
