@@ -332,21 +332,36 @@ void insert_after_postiton()
 //Delete Employees Record By name
 void delete_Employee_Record_by_name()
 {
+
     char value[20];
+
+    FILE *fp, *temp;
     int key;
-    struct employee *myNode = head, *previous = NULL;
+
+    struct employee *myNode = (struct employee *)malloc(sizeof(struct employee));
+    struct employee *temp1 = (struct employee *)malloc(sizeof(struct employee));
     int flag = 0;
+    if ((fp = fopen("Database.bin", "rb")) == NULL)
+    {
+        printf("No such file\n");
+        exit(1);
+    }
+    if ((temp = fopen("Temp.bin", "wb")) == NULL)
+    {
+        printf("No such file\n");
+        exit(1);
+    }
     printf("Enter Name: ");
     getchar();
     gets(value);
-    while (myNode != NULL)
+    while (fread(myNode, sizeof(*myNode), 1, fp) == 1)
     {
 
         if (strcmp(strlwr(myNode->name), strlwr(value)) == 0)
         {
 
             printf("\nDo you Really delete this Employee Record\n");
-            //after entry Name match then this will be  print
+            //after entry ID match then this will be  print
             printf("----------------------------------------------------------------------------------------------\n");
             printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
             printf("----------------------------------------------------------------------------------------------\n");
@@ -362,44 +377,59 @@ void delete_Employee_Record_by_name()
             //if user input = 1 then delete function will be work
             if (key == 1)
             {
-
-                if (previous == NULL)
-                {
-                    head = myNode->next;
-                }
-                else
-                {
-                    previous->next = myNode->next;
-                }
-                //after delete records this messsege will be print
-                printf("\n%s Name records is deleted from Database\n", value);
-
                 flag = 1;
-                free(myNode); //need to free up the memory to prevent memory leak
-                break;
             }
             else
             {
-                break;
+                fwrite(myNode, 1, sizeof(struct employee), temp);
+                flag = 1;
             }
         }
-        previous = myNode;
-        myNode = myNode->next;
+        else
+        {
+            fwrite(myNode, 1, sizeof(struct employee), temp);
+        }
     }
+    if (flag == 0)
+    { // if user input not match with database this messege will be show
 
-    if (flag == 0) // if user input not match with database this messege will be show
         printf("\nThis Name not found!\n");
+    }
+    fclose(fp);
+    fclose(temp);
+    fp = fopen("Database.bin", "wb");
+    temp = fopen("Temp.bin", "rb");
+
+    while (fread(temp1, sizeof(*temp1), 1, temp) == 1)
+    {
+        fwrite(temp1, 1, sizeof(struct employee), fp);
+    }
+    fclose(fp);
+    fclose(temp);
 }
 
 //Delete Employees Record By ID
 void delete_Employee_Record_by_ID()
 {
+    FILE *fp, *temp;
     int value, key;
-    struct employee *myNode = head, *previous = NULL;
+
+    struct employee *myNode = (struct employee *)malloc(sizeof(struct employee));
+    struct employee *temp1 = (struct employee *)malloc(sizeof(struct employee));
     int flag = 0;
+    if ((fp = fopen("Database.bin", "rb")) == NULL)
+    {
+        printf("No such file\n");
+        exit(1);
+    }
+    if ((temp = fopen("Temp.bin", "wb")) == NULL)
+    {
+        printf("No such file\n");
+        exit(1);
+    }
     printf("Enter ID: ");
     scanf("%d", &value);
-    while (myNode != NULL)
+    while (fread(myNode, sizeof(*myNode), 1, fp) == 1)
     {
 
         if (myNode->ID == value)
@@ -422,33 +452,33 @@ void delete_Employee_Record_by_ID()
             //if user input = 1 then delete function will be work
             if (key == 1)
             {
-
-                if (previous == NULL)
-                {
-                    head = myNode->next;
-                }
-                else
-                {
-                    previous->next = myNode->next;
-                }
-                //after delete records this messsege will be print
-                printf("\n%d ID records is deleted from Database\n", value);
-
                 flag = 1;
-                free(myNode); //need to free up the memory to prevent memory leak
-                break;
             }
             else
             {
-                break;
+                fwrite(myNode, 1, sizeof(struct employee), temp);
+                flag = 1;
             }
         }
-        previous = myNode;
-        myNode = myNode->next;
+        else
+        {
+            fwrite(myNode, 1, sizeof(struct employee), temp);
+        }
     }
 
     if (flag == 0) // if user input not match with database this messege will be show
         printf("\nThis ID not found!\n");
+    fclose(fp);
+    fclose(temp);
+    fp = fopen("Database.bin", "wb");
+    temp = fopen("Temp.bin", "rb");
+
+    while (fread(temp1, sizeof(*temp1), 1, temp) == 1)
+    {
+        fwrite(temp1, 1, sizeof(struct employee), fp);
+    }
+    fclose(fp);
+    fclose(temp);
 }
 
 //Delete Employees Record By age
