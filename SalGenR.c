@@ -42,21 +42,9 @@ bool loginCheck(char name[15], char pass[15])
     }
 }
 
-void writeToFile(struct employee *temp_node)
-{
-    FILE *fp;
-    if ((fp = fopen("Database.bin", "ab")) == NULL)
-    {
-        printf("\nCan't open file\n");
-        exit(1);
-    }
-
-    fwrite(temp_node, sizeof(*temp_node), 1, fp);
-    fclose(fp);
-}
-
 void PrintFromFile()
 {
+    int i = 1;
     struct employee *temp_node;
     FILE *fp;
     temp_node = (struct employee *)malloc(sizeof(struct employee));
@@ -66,19 +54,21 @@ void PrintFromFile()
         printf("No such file\n");
         exit(1);
     }
-    printf("\n\n                                     All Employee Details                                     \n");
-    printf("----------------------------------------------------------------------------------------------\n");
-    printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
-    printf("----------------------------------------------------------------------------------------------\n");
+    printf("\n\n                                         All Employee Details                                     \n");
+    printf("-------------------------------------------------------------------------------------------------------\n");
+    printf("| SL No  | Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
+    printf("-------------------------------------------------------------------------------------------------------\n");
     while (fread(temp_node, sizeof(*temp_node), 1, fp) == 1)
     {
+        printf("| %-7d", i);
         printf("| %-19s", temp_node->name);
         printf("| %-9d", temp_node->ID);
         printf("| %-7d", temp_node->age);
         printf("| 0%-13d", temp_node->phone_number);
         printf("| %-19s", temp_node->address);
         printf("| %-13.3lf|\n", temp_node->salary);
-        printf("----------------------------------------------------------------------------------------------\n");
+        printf("-------------------------------------------------------------------------------------------------------\n");
+        i++;
     }
     fclose(fp);
 }
@@ -90,6 +80,13 @@ void PrintFromFile()
 //Creating or adding linklist continiously
 void create_linked_list()
 {
+    FILE *fp;
+    if ((fp = fopen("Database.bin", "ab")) == NULL)
+    {
+        printf("\nCan't open file\n");
+        exit(1);
+    }
+
     //local variables for work
     int n, i = 1;
     char name[20], address[20];
@@ -127,26 +124,20 @@ void create_linked_list()
         strcpy(temp_node->address, address);
         temp_node->salary = salary;
         temp_node->next = NULL;
-
-        //For the 1st element
-        if (head == NULL)
-        {
-            head = temp_node;
-            tail = temp_node;
-        }
-        else
-        {
-            tail->next = temp_node;
-            tail = temp_node;
-        }
-        i++;
-        writeToFile(temp_node);
+        fwrite(temp_node, sizeof(*temp_node), 1, fp);
     }
+    fclose(fp);
 }
 
 //insert Node in linklist at last
 void insert_at_last()
 {
+    FILE *fp;
+    if ((fp = fopen("Database.bin", "ab")) == NULL)
+    {
+        printf("\nCan't open file\n");
+        exit(1);
+    }
     char name[20], address[20];
     int age, pnumber, id;
     double salary;
@@ -177,24 +168,20 @@ void insert_at_last()
     strcpy(temp_node->address, address);
     temp_node->salary = salary;
     temp_node->next = NULL;
-
-    //For the 1st element
-    if (head == NULL)
-    {
-        head = temp_node;
-        tail = temp_node;
-    }
-    else
-    {
-        tail->next = temp_node;
-        tail = temp_node;
-    }
-    writeToFile(temp_node);
+    fwrite(temp_node, sizeof(*temp_node), 1, fp);
+    fclose(fp);
 }
 
 //insert nodes at first
 void insert_at_first()
 {
+    FILE *fp, *Temp;
+    if ((fp = fopen("Database.bin", "rb")) == NULL)
+    {
+        printf("\nCan't open file\n");
+        exit(1);
+    }
+    Temp = fopen("Temp.bin", "ab");
     char name[20], address[20];
     int age, pnumber, id;
     double salary;
@@ -223,13 +210,28 @@ void insert_at_first()
     strcpy(temp_node->address, address);
     temp_node->salary = salary;
     temp_node->next = head;
-    head = temp_node;
-    writeToFile(temp_node);
+    fwrite(temp_node, sizeof(*temp_node), 1, Temp);
+    struct employee *myNode = (struct employee *)malloc(sizeof(struct employee));
+    while (fread(myNode, sizeof(*myNode), 1, fp) == 1)
+    {
+        fwrite(myNode, 1, sizeof(struct employee), Temp);
+    }
+    fclose(fp);
+    fclose(Temp);
+    remove("Database.bin");
+    rename("Temp.bin", "Database.bin");
 }
 
 void insert_after_postiton()
 {
     //local variables
+    FILE *fp, *Temp;
+    if ((fp = fopen("Database.bin", "rb")) == NULL)
+    {
+        printf("\nCan't open file\n");
+        exit(1);
+    }
+    Temp = fopen("Temp.bin", "ab");
     int key;
     struct employee *myNode = head;
     int flag = 0;
@@ -239,8 +241,9 @@ void insert_after_postiton()
     int age, pnumber, id;
     double salary;
 
-    while (myNode != NULL) // if mynode pointer will NULL then this loop will be stop
+    while (fread(myNode, sizeof(*myNode), 1, fp) == 1) // if mynode pointer will NULL then this loop will be stop
     {
+        fwrite(myNode, sizeof(*myNode), 1, Temp);
         if (myNode->ID == key) // ID matching
         {
             //inputting records
@@ -268,18 +271,9 @@ void insert_after_postiton()
             newNode->phone_number = pnumber;
             strcpy(newNode->address, address);
             newNode->salary = salary;
-            newNode->next = myNode->next;
-            myNode->next = newNode;
-            writeToFile(myNode);
-            printf("New Employee %s is inserted after %d\n", name, key);
-
+            newNode->next = NULL;
+            fwrite(newNode, sizeof(*newNode), 1, Temp);
             flag = 1;
-
-            break;
-        }
-        else
-        {
-            myNode = myNode->next;
         }
     }
 
@@ -288,6 +282,10 @@ void insert_after_postiton()
     {
         printf("ID not found!\n");
     }
+    fclose(fp);
+    fclose(Temp);
+    remove("Database.bin");
+    rename("Temp.bin", "Database.bin");
 }
 
 /*
