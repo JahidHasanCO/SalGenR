@@ -292,38 +292,6 @@ void insert_after_postiton()
     Insert section end
 */
 
-//print all employees details
-// void print_employee_list()
-// {
-//     struct employee *temp = head; //creating a temporary pointer for traverse
-//     //if database is empty then this messege will be show
-//     if (head == NULL)
-//     {
-//         printf("\nEmployee list is Empty\n");
-//     }
-//     else
-//     {
-
-//         /*  20-10-8-15-20-14 */
-//         printf("\n\n                                     All Employee Details                                     \n");
-//         printf("----------------------------------------------------------------------------------------------\n");
-//         printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
-//         printf("----------------------------------------------------------------------------------------------\n");
-
-//         while (temp != NULL)
-//         {
-//             printf("| %-19s", temp->name);
-//             printf("| %-9d", temp->ID);
-//             printf("| %-7d", temp->age);
-//             printf("| 0%-13d", temp->phone_number);
-//             printf("| %-19s", temp->address);
-//             printf("| %-13.3lf|\n", temp->salary);
-//             printf("----------------------------------------------------------------------------------------------\n");
-//             temp = temp->next;
-//         }
-//     }
-// }
-
 /*Delete section start
 */
 
@@ -1009,24 +977,32 @@ void search_Employee_By_Place()
     modifie section start
 */
 
-bool modify_Employee_Name()
+void modify_Employee_Name()
 {
-    char old[20];
-    int pos = 0, key;
-    if (head == NULL)
-    {
-        printf("\nDatabase not Found!\n");
-        return false;
-    }
-    printf("\nEnter name for modifie: ");
+    char name[20], Address[20];
+    int age, pnumber, id, option;
+    double salary;
+
+    FILE *fp, *temp;
+    fp = fopen("Database.bin", "rb");
+    temp = fopen("Temp.bin", "wb");
+    char old[20];     //old value
+    int pos = 0, key; //position and option change value variable
+    printf("\nEnter Name for modifie: ");
     getchar();
     gets(old);
-    struct employee *current = head;
-    while (current->next != NULL)
+    struct employee *current = (struct employee *)malloc(sizeof(struct employee));
+    struct employee *temp1 = (struct employee *)malloc(sizeof(struct employee));
+    /* this codindition for first node or last node....
+    I mean database has only one node then this condition will be run
+    or database has last node to check then this condition will be run
+    */
+    while (fread(current, sizeof(*current), 1, fp) == 1)
     {
+
         if (strcmp(current->name, old) == 0)
         {
-            printf("\n%s this name found employee.", old);
+            printf("\n%d this Name found employee.\n", old);
             printf("----------------------------------------------------------------------------------------------\n");
             printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
             printf("----------------------------------------------------------------------------------------------\n");
@@ -1039,46 +1015,101 @@ bool modify_Employee_Name()
             printf("----------------------------------------------------------------------------------------------\n");
             printf("\nDo You want to Modifie this Records?(1 = Yes, 2 = No)\n");
             printf("--------------------------------------------------------\n");
-            scanf("%d ", &key);
-            if (key == 1)
+            scanf(" %d", &key);
+
+            while (key == 1)
             {
-                mod = current;
-                // printf("\n%s found at position %d, and replaced\n", old, pos);
-                return true;
+                printf("\nChoose option for modifie\n");
+                printf("--------------------------\n");
+                printf("1. Name change.\n");
+                printf("2. ID change\n");
+                printf("3. Age change\n");
+                printf("4. Phone Number change\n");
+                printf("5. Salary change\n");
+                printf("6. Address change\n");
+                printf("7. Exit\n");
+                printf("\nChange>> ");
+                scanf(" %d", &option);
+                if (option == 7)
+                {
+                    break;
+                }
+
+                switch (option)
+                {
+                case 1:
+                    printf("Enter new Name: ");
+                    getchar();
+                    gets(name);
+                    strcpy(current->name, name);
+                    break;
+                case 2:
+                    printf("Enter new ID: ");
+                    scanf("%d", &id);
+                    current->ID = id;
+                    break;
+                case 3:
+                    printf("Enter new Age: ");
+                    scanf("%d", &age);
+                    current->age = age;
+                    break;
+                case 4:
+                    printf("Enter new Phone number: ");
+                    scanf("%d", &pnumber);
+                    current->phone_number = pnumber;
+                    break;
+                case 5:
+                    printf("Enter new Salary: ");
+                    scanf("%lf", &salary);
+                    current->salary = salary;
+                    break;
+                case 6:
+                    printf("Enter new Address: ");
+                    getchar();
+                    gets(Address);
+                    strcpy(current->address, Address);
+                    break;
+                default:
+                    printf("\nYou have to choose right option\n");
+                    break;
+                }
             }
+            fwrite(current, 1, sizeof(*current), temp);
         }
         else
         {
-            //if user given name and stored name not matched then searchnode traverse the next node
-            current = current->next;
+            fwrite(current, 1, sizeof(*current), temp);
         }
-        pos++;
     }
-
-    printf("\n%s name not exist in the Database.\n", old);
+    fclose(fp);
+    fclose(temp);
+    remove("Database.bin");
+    rename("Temp.bin", "Database.bin");
 }
 
 //modify function using by ID
-bool modify_Employee_ID()
+void modify_Employee_ID()
 {
+    char name[20], Address[20];
+    int age, pnumber, id, option;
+    double salary;
+
+    FILE *fp, *temp;
+    fp = fopen("Database.bin", "rb");
+    temp = fopen("Temp.bin", "wb");
     int old;          //old value
     int pos = 0, key; //position and option change value variable
-    if (head == NULL) // check database impty or not
-    {
-        printf("\nDatabase not Found!\n");
-        return false;
-    }
     printf("\nEnter ID for modifie: ");
     scanf("%d", &old);
-    struct employee *current = head;
-
+    struct employee *current = (struct employee *)malloc(sizeof(struct employee));
+    struct employee *temp1 = (struct employee *)malloc(sizeof(struct employee));
     /* this codindition for first node or last node....
     I mean database has only one node then this condition will be run
     or database has last node to check then this condition will be run
     */
-
-    if (current->next == NULL)
+    while (fread(current, sizeof(*current), 1, fp) == 1)
     {
+
         if (current->ID == old)
         {
             printf("\n%d this ID found employee.\n", old);
@@ -1094,76 +1125,104 @@ bool modify_Employee_ID()
             printf("----------------------------------------------------------------------------------------------\n");
             printf("\nDo You want to Modifie this Records?(1 = Yes, 2 = No)\n");
             printf("--------------------------------------------------------\n");
-            scanf("%d ", &key);
-            if (key == 1)
+            scanf(" %d", &key);
+
+            while (key == 1)
             {
-                mod = current;
-                // printf("\n%s found at position %d, and replaced\n", old, pos);
-                return true;
+                printf("\nChoose option for modifie\n");
+                printf("--------------------------\n");
+                printf("1. Name change.\n");
+                printf("2. ID change\n");
+                printf("3. Age change\n");
+                printf("4. Phone Number change\n");
+                printf("5. Salary change\n");
+                printf("6. Address change\n");
+                printf("7. Exit\n");
+                printf("\nChange>> ");
+                scanf(" %d", &option);
+                if (option == 7)
+                {
+                    break;
+                }
+
+                switch (option)
+                {
+                case 1:
+                    printf("Enter new Name: ");
+                    getchar();
+                    gets(name);
+                    strcpy(current->name, name);
+                    break;
+                case 2:
+                    printf("Enter new ID: ");
+                    scanf("%d", &id);
+                    current->ID = id;
+                    break;
+                case 3:
+                    printf("Enter new Age: ");
+                    scanf("%d", &age);
+                    current->age = age;
+                    break;
+                case 4:
+                    printf("Enter new Phone number: ");
+                    scanf("%d", &pnumber);
+                    current->phone_number = pnumber;
+                    break;
+                case 5:
+                    printf("Enter new Salary: ");
+                    scanf("%lf", &salary);
+                    current->salary = salary;
+                    break;
+                case 6:
+                    printf("Enter new Address: ");
+                    getchar();
+                    gets(Address);
+                    strcpy(current->address, Address);
+                    break;
+                default:
+                    printf("\nYou have to choose right option\n");
+                    break;
+                }
             }
-        }
-    }
-    while (current->next != NULL)
-    {
-        if (current->ID == old)
-        {
-            printf("\n%d this ID found employee.", old);
-            printf("-----------------------------------\n");
-            printf("----------------------------------------------------------------------------------------------\n");
-            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
-            printf("----------------------------------------------------------------------------------------------\n");
-            printf("| %-19s", current->name);
-            printf("| %-9d", current->ID);
-            printf("| %-7d", current->age);
-            printf("| 0%-13d", current->phone_number);
-            printf("| %-19s", current->address);
-            printf("| %-13.3lf|\n", current->salary);
-            printf("----------------------------------------------------------------------------------------------\n");
-            printf("\nDo You want to Modifie this Records?(1 = Yes, 2 = No)\n");
-            printf("--------------------------------------------------------\n");
-            scanf("%d ", &key);
-            if (key == 1)
-            {
-                mod = current;
-                // printf("\n%s found at position %d, and replaced\n", old, pos);
-                return true;
-            }
+            fwrite(current, 1, sizeof(*current), temp);
         }
         else
         {
-            //if user given id and stored id not matched then searchnode traverse the next node
-            current = current->next;
+            fwrite(current, 1, sizeof(*current), temp);
         }
-        pos++;
     }
-
-    printf("\n%d ID not exist in the Database.\n", old);
+    fclose(fp);
+    fclose(temp);
+    remove("Database.bin");
+    rename("Temp.bin", "Database.bin");
 }
 
 //modify function using by Age
-bool modify_Employee_Age()
+void modify_Employee_Age()
 {
+    char name[20], Address[20];
+    int age, pnumber, id, option;
+    double salary;
+
+    FILE *fp, *temp;
+    fp = fopen("Database.bin", "rb");
+    temp = fopen("Temp.bin", "wb");
     int old;          //old value
     int pos = 0, key; //position and option change value variable
-    if (head == NULL) // check database impty or not
-    {
-        printf("\nDatabase not Found!\n");
-        return false;
-    }
     printf("\nEnter Age for modifie: ");
     scanf("%d", &old);
-    struct employee *current = head;
-
+    struct employee *current = (struct employee *)malloc(sizeof(struct employee));
+    struct employee *temp1 = (struct employee *)malloc(sizeof(struct employee));
     /* this codindition for first node or last node....
     I mean database has only one node then this condition will be run
     or database has last node to check then this condition will be run
     */
+    while (fread(current, sizeof(*current), 1, fp) == 1)
+    {
 
-    if (current->next == NULL)
-    {
         if (current->age == old)
         {
-            printf("\n%d this age found employee.\n", old);
+            printf("\n%d this Age found employee.\n", old);
             printf("----------------------------------------------------------------------------------------------\n");
             printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
             printf("----------------------------------------------------------------------------------------------\n");
@@ -1176,73 +1235,101 @@ bool modify_Employee_Age()
             printf("----------------------------------------------------------------------------------------------\n");
             printf("\nDo You want to Modifie this Records?(1 = Yes, 2 = No)\n");
             printf("--------------------------------------------------------\n");
-            scanf("%d ", &key);
-            if (key == 1)
+            scanf(" %d", &key);
+
+            while (key == 1)
             {
-                mod = current;
-                // printf("\n%s found at position %d, and replaced\n", old, pos);
-                return true;
+                printf("\nChoose option for modifie\n");
+                printf("--------------------------\n");
+                printf("1. Name change.\n");
+                printf("2. ID change\n");
+                printf("3. Age change\n");
+                printf("4. Phone Number change\n");
+                printf("5. Salary change\n");
+                printf("6. Address change\n");
+                printf("7. Exit\n");
+                printf("\nChange>> ");
+                scanf(" %d", &option);
+                if (option == 7)
+                {
+                    break;
+                }
+
+                switch (option)
+                {
+                case 1:
+                    printf("Enter new Name: ");
+                    getchar();
+                    gets(name);
+                    strcpy(current->name, name);
+                    break;
+                case 2:
+                    printf("Enter new ID: ");
+                    scanf("%d", &id);
+                    current->ID = id;
+                    break;
+                case 3:
+                    printf("Enter new Age: ");
+                    scanf("%d", &age);
+                    current->age = age;
+                    break;
+                case 4:
+                    printf("Enter new Phone number: ");
+                    scanf("%d", &pnumber);
+                    current->phone_number = pnumber;
+                    break;
+                case 5:
+                    printf("Enter new Salary: ");
+                    scanf("%lf", &salary);
+                    current->salary = salary;
+                    break;
+                case 6:
+                    printf("Enter new Address: ");
+                    getchar();
+                    gets(Address);
+                    strcpy(current->address, Address);
+                    break;
+                default:
+                    printf("\nYou have to choose right option\n");
+                    break;
+                }
             }
-        }
-    }
-    while (current->next != NULL)
-    {
-        if (current->age == old)
-        {
-            printf("\n%d this age found employee.", old);
-            printf("-----------------------------------\n");
-            printf("----------------------------------------------------------------------------------------------\n");
-            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
-            printf("----------------------------------------------------------------------------------------------\n");
-            printf("| %-19s", current->name);
-            printf("| %-9d", current->ID);
-            printf("| %-7d", current->age);
-            printf("| 0%-13d", current->phone_number);
-            printf("| %-19s", current->address);
-            printf("| %-13.3lf|\n", current->salary);
-            printf("----------------------------------------------------------------------------------------------\n");
-            printf("\nDo You want to Modifie this Records?(1 = Yes, 2 = No)\n");
-            printf("--------------------------------------------------------\n");
-            scanf("%d ", &key);
-            if (key == 1)
-            {
-                mod = current;
-                // printf("\n%s found at position %d, and replaced\n", old, pos);
-                return true;
-            }
+            fwrite(current, 1, sizeof(*current), temp);
         }
         else
         {
-            //if user given id and stored id not matched then searchnode traverse the next node
-            current = current->next;
+            fwrite(current, 1, sizeof(*current), temp);
         }
-        pos++;
     }
-
-    printf("\n%d age not exist in the Database.\n", old);
+    fclose(fp);
+    fclose(temp);
+    remove("Database.bin");
+    rename("Temp.bin", "Database.bin");
 }
 
 //modify function using by Phone Number
-bool modify_Employee_pnumber()
+void modify_Employee_pnumber()
 {
+    char name[20], Address[20];
+    int age, pnumber, id, option;
+    double salary;
+
+    FILE *fp, *temp;
+    fp = fopen("Database.bin", "rb");
+    temp = fopen("Temp.bin", "wb");
     int old;          //old value
     int pos = 0, key; //position and option change value variable
-    if (head == NULL) // check database impty or not
-    {
-        printf("\nDatabase not Found!\n");
-        return false;
-    }
     printf("\nEnter Phone Number for modifie: ");
     scanf("%d", &old);
-    struct employee *current = head;
-
+    struct employee *current = (struct employee *)malloc(sizeof(struct employee));
+    struct employee *temp1 = (struct employee *)malloc(sizeof(struct employee));
     /* this codindition for first node or last node....
     I mean database has only one node then this condition will be run
     or database has last node to check then this condition will be run
     */
-
-    if (current->next == NULL)
+    while (fread(current, sizeof(*current), 1, fp) == 1)
     {
+
         if (current->phone_number == old)
         {
             printf("\n%d this Phone Number found employee.\n", old);
@@ -1258,110 +1345,76 @@ bool modify_Employee_pnumber()
             printf("----------------------------------------------------------------------------------------------\n");
             printf("\nDo You want to Modifie this Records?(1 = Yes, 2 = No)\n");
             printf("--------------------------------------------------------\n");
-            scanf("%d ", &key);
-            if (key == 1)
+            scanf(" %d", &key);
+
+            while (key == 1)
             {
-                mod = current;
-                // printf("\n%s found at position %d, and replaced\n", old, pos);
-                return true;
+                printf("\nChoose option for modifie\n");
+                printf("--------------------------\n");
+                printf("1. Name change.\n");
+                printf("2. ID change\n");
+                printf("3. Age change\n");
+                printf("4. Phone Number change\n");
+                printf("5. Salary change\n");
+                printf("6. Address change\n");
+                printf("7. Exit\n");
+                printf("\nChange>> ");
+                scanf(" %d", &option);
+                if (option == 7)
+                {
+                    break;
+                }
+
+                switch (option)
+                {
+                case 1:
+                    printf("Enter new Name: ");
+                    getchar();
+                    gets(name);
+                    strcpy(current->name, name);
+                    break;
+                case 2:
+                    printf("Enter new ID: ");
+                    scanf("%d", &id);
+                    current->ID = id;
+                    break;
+                case 3:
+                    printf("Enter new Age: ");
+                    scanf("%d", &age);
+                    current->age = age;
+                    break;
+                case 4:
+                    printf("Enter new Phone number: ");
+                    scanf("%d", &pnumber);
+                    current->phone_number = pnumber;
+                    break;
+                case 5:
+                    printf("Enter new Salary: ");
+                    scanf("%lf", &salary);
+                    current->salary = salary;
+                    break;
+                case 6:
+                    printf("Enter new Address: ");
+                    getchar();
+                    gets(Address);
+                    strcpy(current->address, Address);
+                    break;
+                default:
+                    printf("\nYou have to choose right option\n");
+                    break;
+                }
             }
-        }
-    }
-    while (current->next != NULL)
-    {
-        if (current->phone_number == old)
-        {
-            printf("\n%d this age found employee.", old);
-            printf("-----------------------------------\n");
-            printf("----------------------------------------------------------------------------------------------\n");
-            printf("| Name               | ID       | Age    | Phone Number  | Address            | Salary       |\n");
-            printf("----------------------------------------------------------------------------------------------\n");
-            printf("| %-19s", current->name);
-            printf("| %-9d", current->ID);
-            printf("| %-7d", current->age);
-            printf("| 0%-13d", current->phone_number);
-            printf("| %-19s", current->address);
-            printf("| %-13.3lf|\n", current->salary);
-            printf("----------------------------------------------------------------------------------------------\n");
-            printf("\nDo You want to Modifie this Records?(1 = Yes, 2 = No)\n");
-            printf("--------------------------------------------------------\n");
-            scanf("%d ", &key);
-            if (key == 1)
-            {
-                mod = current;
-                // printf("\n%s found at position %d, and replaced\n", old, pos);
-                return true;
-            }
+            fwrite(current, 1, sizeof(*current), temp);
         }
         else
         {
-            //if user given id and stored id not matched then searchnode traverse the next node
-            current = current->next;
-        }
-        pos++;
-    }
-
-    printf("\n%d Phone Number not exist in the Database.\n", old);
-}
-
-//this function change record if we need to modifie
-void change_Records(struct employee *current)
-{
-
-    char name[20];
-    int age, pnumber, id, option;
-    double salary;
-    while (1)
-    {
-        printf("\nChoose option for modifie\n");
-        printf("--------------------------\n");
-        printf("1. Name change.\n");
-        printf("2. ID change\n");
-        printf("3. Age change\n");
-        printf("4. Phone Number change\n");
-        printf("5. Salary change\n");
-        printf("6. Exit\n");
-        printf("\nChange>> ");
-        scanf("%d", &option);
-        if (option == 6)
-        {
-            break;
-        }
-
-        switch (option)
-        {
-        case 1:
-            printf("Enter new Name: ");
-            getchar();
-            gets(name);
-            strcpy(current->name, name);
-            break;
-        case 2:
-            printf("Enter new ID: ");
-            scanf("%d", &id);
-            current->ID = id;
-            break;
-        case 3:
-            printf("Enter new Age: ");
-            scanf("%d", &age);
-            current->age = age;
-            break;
-        case 4:
-            printf("Enter new Phone number: ");
-            scanf("%d", &pnumber);
-            current->phone_number = pnumber;
-            break;
-        case 5:
-            printf("Enter new Salary: ");
-            scanf("%lf", &salary);
-            current->salary = salary;
-            break;
-        default:
-            printf("\nYou have to choose right option\n");
-            break;
+            fwrite(current, 1, sizeof(*current), temp);
         }
     }
-    mod = NULL;
+    fclose(fp);
+    fclose(temp);
+    remove("Database.bin");
+    rename("Temp.bin", "Database.bin");
 }
 
 /*
@@ -1473,9 +1526,7 @@ int main()
                     printf("2.Modifie by ID.\n");
                     printf("3.Modifie by Age.\n");
                     printf("4.Modifie by Phone Number.\n");
-                    printf("5.Modifie by Salary\n");
-                    printf("6.Modifie by Address\n");
-                    printf("7.Back\n");
+                    printf("5.Back\n");
                     printf("\nModifie>> ");
                     scanf("%d", &option3);
 
@@ -1492,31 +1543,21 @@ int main()
                     {
                     case 1:
                         //if user want to modifie employee by name then this condition will be true
-                        if (modify_Employee_Name() == true) /*if modify function returns a true value then this condition will be true */
-                        {
-                            change_Records(mod);
-                        }
+                        modify_Employee_Name();
                         break;
                     case 2:
-                        //if user want to modifie employee by ID then this condition will be true
-                        if (modify_Employee_ID() == true) /*if modify function returns a true value then this condition will be true */
-                        {
-                            change_Records(mod);
-                        }
+                        modify_Employee_ID();
                         break;
                     case 3:
                         //if user want to modifie employee by age then this condition will be true
-                        if (modify_Employee_Age() == true) /*if modify function returns a true value then this condition will be true */
-                        {
-                            change_Records(mod);
-                        }
+                        modify_Employee_Age();
+
                         break;
                     case 4:
+                        modify_Employee_pnumber();
                         //if user want to modifie employee by phone Number then this condition will be true
-                        if (modify_Employee_pnumber() == true) /*if modify function returns a true value then this condition will be true */
-                        {
-                            change_Records(mod);
-                        }
+                        break;
+                    case 5:
                         break;
                     default:
                         //if user not input a valid option then this messege will be print
@@ -1629,7 +1670,6 @@ int main()
                         printf("You have to choose right option\n");
                         break;
                     }
-                    //switch section end
 
                     break;
                     //delete section End
