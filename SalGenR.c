@@ -125,6 +125,7 @@ void create_linked_list()
         temp_node->salary = salary;
         temp_node->next = NULL;
         fwrite(temp_node, sizeof(*temp_node), 1, fp);
+        i++;
     }
     fclose(fp);
 }
@@ -1542,6 +1543,7 @@ int main()
                     switch (option3)
                     {
                     case 1:
+                        system("CLS");
                         //if user want to modifie employee by name then this condition will be true
                         modify_Employee_Name();
                         break;
